@@ -1,0 +1,3124 @@
+<!DOCTYPE html>
+<html lang="it">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="artifact-type" content="narrative">
+  <meta name="design-style" content="handbook">
+  <title>Attestazioni negli Atti Contabili — Guida Operativa PA</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Public+Sans:ital,wght@0,400;0,500;0,600;0,700;0,800;1,400&display=swap" rel="stylesheet">
+  <style>
+    :root {
+      color-scheme: light;
+
+      /* Page and surfaces (Handbook tokens) */
+      --background: #ffffff;
+      --surface-container-low: #f3f2f1;
+      --surface-container: #e8e7e5;
+      --surface-container-high: #dbdad9;
+
+      /* Ink */
+      --on-surface: #0b0c0c;
+      --on-surface-variant: #505a5f;
+
+      /* Rules */
+      --outline: #0b0c0c;
+      --outline-variant: #b1b4b6;
+
+      /* Accents */
+      --primary: #162e51;
+      --on-primary: #ffffff;
+      --primary-container: #d2e2f1;
+      --on-primary-container: #0c2d4a;
+      --secondary: #4c2c92;
+      --tertiary: #1a569e;
+      --error: #d4351c;
+      --on-error: #ffffff;
+      --error-container: #fdecea;
+
+      /* Semantic & Handbook tokens */
+      --positive: #00703c;
+      --on-positive: #ffffff;
+      --positive-container: #e6f4ec;
+      --warning: #944600;
+      --warning-container: #fff4e5;
+      --focus: #ffdd00;
+      --backdrop-scrim: rgba(11, 12, 12, 0.55);
+      --button-shadow: #091526;
+      --button-shadow-sec: #858686;
+
+      /* Data series */
+      --data-1: #1a569e;
+      --data-2: #c75a0a;
+      --data-3: #28a197;
+      --data-4: #4c2c92;
+      --data-context: #b1b4b6;
+
+      /* Fonts */
+      --font-headline: 'Public Sans', sans-serif;
+      --font-body: 'Public Sans', sans-serif;
+      --font-label: 'Public Sans', sans-serif;
+
+      /* Shape */
+      --rounded: 0;
+      --rounded-lg: 0;
+      --rounded-full: 0;
+
+      /* Effects */
+      --top-index-rule: 6px solid var(--primary);
+      --inset-rule: 5px solid var(--tertiary);
+      --inset-rule-warning: 5px solid var(--warning);
+      --inset-rule-error: 5px solid var(--error);
+      --inset-rule-positive: 5px solid var(--positive);
+      --button-ground: 0 2px 0 var(--button-shadow);
+      --button-ground-secondary: 0 2px 0 var(--button-shadow-sec);
+      --focus-ring: 3px solid var(--focus);
+      --focus-bar: inset 0 0 0 2px var(--on-surface);
+      --focus-underline: 0 -2px var(--focus), 0 4px var(--on-surface);
+
+      /* Type scale */
+      --display-size: clamp(2rem, 1.35rem + 2.4vw, 3rem);
+      --headline-size: clamp(1.5rem, 1.15rem + 1.2vw, 2.05rem);
+      --subhead-size: clamp(1.15rem, 1.05rem + 0.45vw, 1.375rem);
+      --body-size: clamp(1rem, 0.96rem + 0.18vw, 1.09375rem);
+      --label-size: 0.8125rem;
+      --footer-size: 9.5pt;
+
+      /* Spacing */
+      --space-xs: 0.25rem;
+      --space-sm: 0.5rem;
+      --space-md: 1rem;
+      --space-lg: 1.5rem;
+      --space-xl: 2.5rem;
+      --space-2xl: 4rem;
+
+      /* Motion */
+      --ease-out: cubic-bezier(0.16, 1, 0.3, 1);
+      --ease-in-out: cubic-bezier(0.65, 0, 0.35, 1);
+      --dur-micro: 120ms;
+      --dur-short: 220ms;
+
+      /* Layout dimensions */
+      --header-h: 68px;
+    }
+
+    /* Base reset */
+    *, *::before, *::after { box-sizing: border-box; }
+    html {
+      overflow-x: clip;
+      margin: 0;
+      padding: 0;
+      scroll-behavior: smooth;
+      scroll-padding-top: calc(var(--header-h) + var(--space-lg));
+    }
+    body {
+      overflow-x: clip;
+      margin: 0;
+      padding: 0;
+      font-family: var(--font-body);
+      font-size: var(--body-size);
+      line-height: 1.55;
+      color: var(--on-surface);
+      background: var(--background);
+      -webkit-font-smoothing: antialiased;
+    }
+
+    /* Screen reader & Skip link (AGID accessibility) */
+    .sr-only {
+      position: absolute;
+      width: 1px;
+      height: 1px;
+      padding: 0;
+      margin: -1px;
+      overflow: hidden;
+      clip: rect(0, 0, 0, 0);
+      white-space: nowrap;
+      border: 0;
+    }
+    .skip-link {
+      position: absolute;
+      left: -9999px;
+      top: 0;
+      z-index: 1000;
+      background: var(--focus);
+      color: var(--on-surface);
+      font-weight: 800;
+      padding: var(--space-sm) var(--space-md);
+      text-decoration: none;
+      border-bottom: 3px solid var(--on-surface);
+    }
+    .skip-link:focus {
+      left: var(--space-sm);
+      top: var(--space-sm);
+    }
+
+    /* Focus treatment */
+    button:focus-visible,
+    a:focus-visible,
+    input:focus-visible,
+    select:focus-visible,
+    [tabindex]:focus-visible {
+      outline: var(--focus-ring);
+      outline-offset: 0;
+      box-shadow: var(--focus-bar);
+    }
+
+    /* Fixed/Sticky Header */
+    .site-header {
+      position: sticky;
+      top: 0;
+      z-index: 60;
+      background: var(--background);
+      border-top: var(--top-index-rule);
+      border-bottom: 2px solid var(--on-surface);
+      min-height: var(--header-h);
+    }
+    .header-inner {
+      max-width: 1440px;
+      margin: 0 auto;
+      padding: var(--space-sm) var(--space-lg);
+      display: grid;
+      grid-template-columns: auto minmax(220px, 420px) auto;
+      align-items: center;
+      gap: var(--space-md);
+    }
+    .header-left {
+      display: flex;
+      align-items: center;
+      gap: var(--space-sm);
+      min-width: 0;
+    }
+    .mobile-menu-btn {
+      display: none;
+      align-items: center;
+      justify-content: center;
+      min-width: 44px;
+      min-height: 44px;
+      padding: var(--space-xs) var(--space-sm);
+      background: var(--surface-container-low);
+      color: var(--on-surface);
+      border: 2px solid var(--outline);
+      font-family: var(--font-label);
+      font-weight: 700;
+      font-size: var(--label-size);
+      cursor: pointer;
+    }
+    .mobile-menu-btn:hover {
+      background: var(--surface-container);
+    }
+    .site-brand {
+      display: flex;
+      align-items: center;
+      gap: var(--space-sm);
+      background: transparent;
+      border: 0;
+      padding: var(--space-xs);
+      margin: 0;
+      text-align: left;
+      cursor: pointer;
+      color: var(--on-surface);
+      min-height: 44px;
+    }
+    .site-brand:hover .brand-title {
+      color: var(--tertiary);
+      text-decoration: underline;
+      text-underline-offset: 3px;
+    }
+    .brand-mark {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      width: 36px;
+      height: 36px;
+      background: var(--primary);
+      color: var(--on-primary);
+      flex-shrink: 0;
+    }
+    .brand-text {
+      display: flex;
+      flex-direction: column;
+      min-width: 0;
+    }
+    .brand-title {
+      font-family: var(--font-headline);
+      font-weight: 800;
+      font-size: 1rem;
+      line-height: 1.15;
+      letter-spacing: -0.01em;
+    }
+    .brand-sub {
+      font-size: 0.75rem;
+      color: var(--on-surface-variant);
+      font-weight: 600;
+      line-height: 1.2;
+    }
+
+    /* Header Search */
+    .header-search {
+      position: relative;
+      width: 100%;
+    }
+    .search-field-wrap {
+      display: flex;
+      align-items: stretch;
+      border: 2px solid var(--outline);
+      background: var(--background);
+    }
+    .search-icon-box {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      padding: 0 var(--space-sm);
+      color: var(--on-surface-variant);
+      background: var(--surface-container-low);
+      border-right: 1px solid var(--outline-variant);
+    }
+    .search-input {
+      flex: 1;
+      min-width: 0;
+      min-height: 40px;
+      border: 0;
+      padding: var(--space-xs) var(--space-sm);
+      font-family: var(--font-body);
+      font-size: 0.9375rem;
+      color: var(--on-surface);
+      background: var(--background);
+    }
+    .search-input:focus {
+      outline: none;
+    }
+    .search-clear-btn {
+      background: var(--surface-container-low);
+      color: var(--on-surface);
+      border: 0;
+      border-left: 1px solid var(--outline-variant);
+      padding: 0 var(--space-sm);
+      min-width: 40px;
+      cursor: pointer;
+      font-weight: 700;
+      font-size: 0.875rem;
+    }
+    .search-clear-btn:hover {
+      background: var(--surface-container);
+    }
+    .search-results-panel {
+      position: absolute;
+      top: calc(100% + 4px);
+      left: 0;
+      right: 0;
+      background: var(--background);
+      border: 2px solid var(--outline);
+      max-height: 65vh;
+      overflow-y: auto;
+      z-index: 80;
+    }
+    .search-results-header {
+      padding: var(--space-xs) var(--space-sm);
+      background: var(--surface-container-low);
+      border-bottom: 1px solid var(--outline-variant);
+      font-size: var(--label-size);
+      font-weight: 700;
+      color: var(--on-surface-variant);
+    }
+    .search-result-item {
+      display: block;
+      width: 100%;
+      text-align: left;
+      background: var(--background);
+      border: 0;
+      border-bottom: 1px solid var(--outline-variant);
+      padding: var(--space-sm) var(--space-md);
+      cursor: pointer;
+      color: var(--on-surface);
+      font-family: var(--font-body);
+    }
+    .search-result-item:hover {
+      background: var(--primary-container);
+    }
+    .search-result-meta {
+      font-size: 0.75rem;
+      font-weight: 700;
+      color: var(--tertiary);
+      text-transform: uppercase;
+      letter-spacing: 0.04em;
+    }
+    .search-result-title {
+      font-weight: 700;
+      font-size: 0.9375rem;
+      margin: 2px 0;
+    }
+    .search-result-snippet {
+      font-size: 0.8125rem;
+      color: var(--on-surface-variant);
+      line-height: 1.35;
+    }
+    mark.search-hl {
+      background: var(--focus-yellow);
+      color: var(--on-surface);
+      padding: 0 2px;
+      font-weight: 700;
+    }
+
+    /* Header Progress */
+    .header-progress {
+      display: flex;
+      flex-direction: column;
+      align-items: flex-end;
+      gap: 4px;
+      min-width: 170px;
+    }
+    .progress-meta-row {
+      display: flex;
+      align-items: center;
+      gap: var(--space-sm);
+      font-size: var(--label-size);
+      font-weight: 700;
+      color: var(--on-surface);
+      font-variant-numeric: tabular-nums;
+    }
+    .progress-pct-badge {
+      background: var(--primary);
+      color: var(--on-primary);
+      padding: 2px 6px;
+      font-size: 0.75rem;
+      font-weight: 800;
+    }
+    .progress-track {
+      width: 180px;
+      height: 8px;
+      background: var(--surface-container);
+      border: 1px solid var(--outline);
+      overflow: hidden;
+    }
+    .progress-fill {
+      height: 100%;
+      width: 0%;
+      background: var(--positive);
+      transition: width var(--dur-short) var(--ease-out);
+    }
+
+    /* 3-Column GitBook Layout */
+    .doc-shell {
+      max-width: 1440px;
+      margin: 0 auto;
+      display: grid;
+      grid-template-columns: 280px minmax(0, 1fr) 250px;
+      gap: var(--space-xl);
+      padding: var(--space-lg);
+      align-items: start;
+    }
+    .doc-shell > * { min-width: 0; }
+
+    /* Left Sidebar (Chapters) */
+    .sidebar-left {
+      position: sticky;
+      top: calc(var(--header-h) + var(--space-lg));
+      max-height: calc(100vh - var(--header-h) - var(--space-xl));
+      overflow-y: auto;
+      border-right: 1px solid var(--outline-variant);
+      padding-right: var(--space-md);
+    }
+    .sidebar-section-label {
+      font-size: var(--label-size);
+      font-weight: 800;
+      text-transform: uppercase;
+      letter-spacing: 0.05em;
+      color: var(--on-surface-variant);
+      padding-bottom: var(--space-xs);
+      margin-bottom: var(--space-sm);
+      border-bottom: 1px solid var(--on-surface);
+    }
+    .chapter-nav-list {
+      list-style: none;
+      margin: 0;
+      padding: 0;
+      display: flex;
+      flex-direction: column;
+      gap: var(--space-xs);
+    }
+    .chapter-nav-btn {
+      display: grid;
+      grid-template-columns: 28px minmax(0, 1fr) auto;
+      align-items: start;
+      gap: var(--space-sm);
+      width: 100%;
+      text-align: left;
+      background: transparent;
+      border: 0;
+      border-left: 4px solid transparent;
+      padding: var(--space-sm);
+      min-height: 44px;
+      cursor: pointer;
+      color: var(--on-surface);
+      font-family: var(--font-body);
+      font-size: 0.9rem;
+      line-height: 1.3;
+    }
+    .chapter-nav-btn:hover {
+      background: var(--surface-container-low);
+      border-left-color: var(--outline-variant);
+    }
+    .chapter-nav-btn.is-active {
+      background: var(--primary-container);
+      color: var(--on-primary-container);
+      border-left-color: var(--primary);
+      font-weight: 700;
+    }
+    .chap-num-badge {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      width: 26px;
+      height: 26px;
+      background: var(--surface-container);
+      color: var(--on-surface);
+      font-weight: 800;
+      font-size: 0.78rem;
+      flex-shrink: 0;
+    }
+    .chapter-nav-btn.is-active .chap-num-badge {
+      background: var(--primary);
+      color: var(--on-primary);
+    }
+    .chapter-nav-btn.is-done .chap-num-badge {
+      background: var(--positive);
+      color: var(--on-positive);
+    }
+    .chap-progress-pill {
+      font-size: 0.75rem;
+      font-weight: 700;
+      color: var(--on-surface-variant);
+      font-variant-numeric: tabular-nums;
+      padding-top: 2px;
+    }
+    .sidebar-mobile-close {
+      display: none;
+      margin-bottom: var(--space-md);
+    }
+    .sidebar-backdrop {
+      display: none;
+    }
+
+    /* Main Content Column */
+    .doc-main {
+      min-width: 0;
+      max-width: 78ch;
+      padding-bottom: var(--space-xl);
+    }
+    .doc-main:focus {
+      outline: none;
+    }
+    .index-header {
+      border-top: var(--top-index-rule);
+      border-bottom: 1px solid var(--on-surface);
+      padding: var(--space-sm) 0;
+      margin-bottom: var(--space-lg);
+      display: flex;
+      flex-wrap: wrap;
+      justify-content: space-between;
+      align-items: center;
+      gap: var(--space-sm);
+      font-weight: 700;
+      font-size: var(--label-size);
+      text-transform: uppercase;
+      letter-spacing: 0.05em;
+    }
+    .status-tag {
+      display: inline-block;
+      background: var(--primary-container);
+      color: var(--on-primary-container);
+      padding: 3px 8px;
+      font-size: 0.75rem;
+      font-weight: 700;
+      text-transform: uppercase;
+      letter-spacing: 0.04em;
+    }
+    .status-tag--positive {
+      background: var(--positive-container);
+      color: var(--positive);
+    }
+    .status-tag--warning {
+      background: var(--warning-container);
+      color: var(--warning);
+    }
+    .status-tag--error {
+      background: var(--error-container);
+      color: var(--error);
+    }
+
+    h1.page-title {
+      font-family: var(--font-headline);
+      font-weight: 800;
+      font-size: var(--display-size);
+      line-height: 1.1;
+      letter-spacing: -0.015em;
+      margin: 0 0 var(--space-sm) 0;
+      color: var(--on-surface);
+    }
+    .page-lede {
+      font-size: var(--subhead-size);
+      color: var(--on-surface-variant);
+      margin: 0 0 var(--space-lg) 0;
+      line-height: 1.45;
+    }
+
+    .chapter-toolbar {
+      display: flex;
+      flex-wrap: wrap;
+      align-items: center;
+      justify-content: space-between;
+      gap: var(--space-sm);
+      padding: var(--space-sm) var(--space-md);
+      background: var(--surface-container-low);
+      border-left: var(--inset-rule);
+      margin-bottom: var(--space-xl);
+    }
+
+    /* Paragraphs / Sections */
+    .doc-section {
+      padding-top: var(--space-lg);
+      margin-top: var(--space-lg);
+      border-top: 1px solid var(--outline-variant);
+    }
+    .doc-section:first-of-type {
+      margin-top: 0;
+    }
+    .section-header-row {
+      display: flex;
+      flex-wrap: wrap;
+      align-items: flex-start;
+      justify-content: space-between;
+      gap: var(--space-md);
+      margin-bottom: var(--space-md);
+    }
+    .section-title-group {
+      display: flex;
+      align-items: flex-start;
+      gap: var(--space-sm);
+      flex: 1;
+      min-width: 240px;
+    }
+    .step-badge {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      min-width: 30px;
+      height: 30px;
+      padding: 0 6px;
+      background: var(--primary);
+      color: var(--on-primary);
+      font-weight: 800;
+      font-size: 0.8125rem;
+      flex-shrink: 0;
+      margin-top: 2px;
+    }
+    .doc-section h2 {
+      font-family: var(--font-headline);
+      font-weight: 800;
+      font-size: var(--headline-size);
+      line-height: 1.15;
+      letter-spacing: -0.01em;
+      margin: 0;
+      color: var(--on-surface);
+    }
+    .doc-section h3 {
+      font-family: var(--font-headline);
+      font-weight: 700;
+      font-size: var(--subhead-size);
+      line-height: 1.25;
+      margin: var(--space-lg) 0 var(--space-sm) 0;
+      color: var(--on-surface);
+    }
+    .doc-section p {
+      margin: 0 0 var(--space-md) 0;
+    }
+    .doc-section ul, .doc-section ol {
+      margin: 0 0 var(--space-md) 0;
+      padding-left: 1.4rem;
+    }
+    .doc-section li {
+      margin-bottom: var(--space-xs);
+    }
+    .ref-strip {
+      display: flex;
+      flex-wrap: wrap;
+      gap: var(--space-xs);
+      margin-bottom: var(--space-md);
+    }
+    .ref-chip {
+      font-size: 0.75rem;
+      font-weight: 700;
+      background: var(--surface-container-low);
+      color: var(--on-surface-variant);
+      border: 1px solid var(--outline-variant);
+      padding: 2px 8px;
+    }
+
+    /* Buttons (Handbook grounded ledge) */
+    .button {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      gap: var(--space-xs);
+      font-family: var(--font-label);
+      font-weight: 600;
+      font-size: 0.9375rem;
+      line-height: 1.2;
+      background: var(--primary);
+      color: var(--on-primary);
+      border: 0;
+      border-radius: var(--rounded);
+      padding: 10px var(--space-md);
+      min-height: 44px;
+      box-shadow: var(--button-ground);
+      cursor: pointer;
+      text-decoration: none;
+    }
+    .button:hover {
+      background: var(--tertiary);
+    }
+    .button:active {
+      transform: translateY(2px);
+      box-shadow: none;
+    }
+    .button--secondary {
+      background: var(--surface-container-low);
+      color: var(--on-surface);
+      box-shadow: var(--button-ground-secondary);
+      border: 1px solid var(--outline-variant);
+    }
+    .button--secondary:hover {
+      background: var(--surface-container);
+    }
+    .button--read-toggle {
+      min-height: 40px;
+      padding: 6px var(--space-md);
+      font-size: 0.875rem;
+      font-weight: 700;
+      border: 2px solid var(--outline);
+      background: var(--background);
+      color: var(--on-surface);
+      box-shadow: none;
+      flex-shrink: 0;
+    }
+    .button--read-toggle:hover {
+      background: var(--surface-container-low);
+    }
+    .button--read-toggle[aria-pressed="true"] {
+      background: var(--positive);
+      color: var(--on-positive);
+      border-color: var(--positive);
+    }
+    .button--copy {
+      background: var(--background);
+      color: var(--tertiary);
+      border: 1px solid var(--tertiary);
+      padding: 4px 10px;
+      min-height: 36px;
+      font-size: 0.8125rem;
+      font-weight: 700;
+      cursor: pointer;
+    }
+    .button--copy:hover {
+      background: var(--primary-container);
+      color: var(--on-primary-container);
+    }
+
+    /* Callouts (.inset) */
+    .inset {
+      border-left: var(--inset-rule);
+      background: var(--surface-container-low);
+      padding: var(--space-md) var(--space-lg);
+      margin: var(--space-md) 0 var(--space-lg) 0;
+    }
+    .inset--warning {
+      border-left: var(--inset-rule-warning);
+      background: var(--warning-container);
+    }
+    .inset--error {
+      border-left: var(--inset-rule-error);
+      background: var(--error-container);
+    }
+    .inset--positive {
+      border-left: var(--inset-rule-positive);
+      background: var(--positive-container);
+    }
+    .inset-title {
+      font-weight: 800;
+      font-size: 0.9375rem;
+      text-transform: uppercase;
+      letter-spacing: 0.04em;
+      margin: 0 0 var(--space-xs) 0;
+      color: var(--on-surface);
+    }
+    .inset--error .inset-title { color: var(--error); }
+    .inset--warning .inset-title { color: var(--warning); }
+    .inset--positive .inset-title { color: var(--positive); }
+
+    /* Formula Block */
+    .formula-box {
+      border: 1px solid var(--outline-variant);
+      border-left: var(--inset-rule);
+      background: var(--background);
+      padding: var(--space-md);
+      margin: var(--space-sm) 0 var(--space-md) 0;
+    }
+    .formula-box-head {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      gap: var(--space-sm);
+      margin-bottom: var(--space-xs);
+    }
+    .formula-label {
+      font-size: 0.8125rem;
+      font-weight: 800;
+      text-transform: uppercase;
+      letter-spacing: 0.04em;
+      color: var(--primary);
+    }
+    .formula-text {
+      margin: 0;
+      font-style: italic;
+      color: var(--on-surface);
+      line-height: 1.5;
+    }
+
+    /* Tables (Handbook ruled tables) */
+    .table-wrap {
+      overflow-x: auto;
+      margin: var(--space-md) 0 var(--space-lg) 0;
+      border-top: 2px solid var(--on-surface);
+    }
+    table.doc-table {
+      width: 100%;
+      border-collapse: collapse;
+      font-size: 0.9375rem;
+      font-variant-numeric: tabular-nums;
+    }
+    table.doc-table th {
+      text-align: left;
+      font-weight: 800;
+      padding: var(--space-sm) var(--space-sm);
+      border-bottom: 2px solid var(--on-surface);
+      background: var(--surface-container-low);
+      vertical-align: top;
+    }
+    table.doc-table td {
+      padding: var(--space-sm) var(--space-sm);
+      border-bottom: 1px solid var(--outline-variant);
+      vertical-align: top;
+    }
+    table.doc-table td.num, table.doc-table th.num {
+      text-align: right;
+      white-space: nowrap;
+    }
+
+    /* Diagrams / Infographics */
+    .diagram-card {
+      background: var(--surface-container-low);
+      border: 1px solid var(--outline-variant);
+      padding: var(--space-md);
+      margin: var(--space-lg) 0;
+    }
+    .diagram-caption {
+      font-size: 0.875rem;
+      color: var(--on-surface-variant);
+      margin-top: var(--space-sm);
+      font-weight: 600;
+    }
+    .diagram-svg {
+      width: 100%;
+      height: auto;
+      display: block;
+    }
+
+    /* Home Chapters Grid */
+    .home-chapters-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(min(280px, 100%), 1fr));
+      gap: var(--space-md);
+      margin: var(--space-lg) 0;
+    }
+    .home-chapter-card {
+      display: flex;
+      flex-direction: column;
+      justify-content: space-between;
+      border: 1px solid var(--outline-variant);
+      border-left: var(--inset-rule);
+      background: var(--background);
+      padding: var(--space-md);
+      gap: var(--space-sm);
+    }
+    .home-chapter-card h3 {
+      margin: 0;
+      font-size: 1.125rem;
+      font-weight: 800;
+    }
+    .home-chapter-card p {
+      margin: 0;
+      font-size: 0.9375rem;
+      color: var(--on-surface-variant);
+    }
+    .home-meta-summary {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
+      gap: var(--space-md);
+      margin: var(--space-lg) 0;
+    }
+    .kpi-inset {
+      border-left: var(--inset-rule);
+      background: var(--surface-container-low);
+      padding: var(--space-sm) var(--space-md);
+    }
+    .kpi-label {
+      font-size: 0.75rem;
+      font-weight: 700;
+      text-transform: uppercase;
+      letter-spacing: 0.04em;
+      color: var(--on-surface-variant);
+    }
+    .kpi-value {
+      font-size: 1.5rem;
+      font-weight: 800;
+      color: var(--primary);
+      font-variant-numeric: tabular-nums;
+      line-height: 1.2;
+      margin: 2px 0;
+    }
+
+    /* Interactive Decision Helper (Cap 2 & Cap 5) */
+    .tool-panel {
+      border: 2px solid var(--outline);
+      background: var(--surface-container-low);
+      padding: var(--space-md);
+      margin: var(--space-lg) 0;
+    }
+    .tool-panel h3 {
+      margin-top: 0;
+    }
+    .tool-controls-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+      gap: var(--space-md);
+      margin-bottom: var(--space-md);
+      align-items: end;
+    }
+    .field-group {
+      display: flex;
+      flex-direction: column;
+      gap: 4px;
+    }
+    .field-label {
+      font-weight: 700;
+      font-size: 0.9rem;
+      color: var(--on-surface);
+    }
+    .field-input, .field-select {
+      min-height: 44px;
+      padding: 8px 12px;
+      border: 2px solid var(--outline);
+      background: var(--background);
+      color: var(--on-surface);
+      font-family: var(--font-body);
+      font-size: 0.95rem;
+    }
+    .field-select {
+      padding-right: 2rem;
+    }
+
+    /* Quiz (Cap 6) */
+    .quiz-dashboard {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(170px, 1fr));
+      gap: var(--space-md);
+      padding: var(--space-md);
+      background: var(--surface-container-low);
+      border-left: var(--inset-rule);
+      margin-bottom: var(--space-lg);
+    }
+    .quiz-card {
+      border: 1px solid var(--outline-variant);
+      border-top: 4px solid var(--primary);
+      padding: var(--space-md);
+      margin-bottom: var(--space-lg);
+      background: var(--background);
+    }
+    .quiz-q-title {
+      font-weight: 800;
+      font-size: 1.05rem;
+      margin: 0 0 var(--space-sm) 0;
+    }
+    .quiz-options {
+      display: flex;
+      flex-direction: column;
+      gap: var(--space-xs);
+    }
+    .quiz-option-btn {
+      display: flex;
+      align-items: flex-start;
+      gap: var(--space-sm);
+      width: 100%;
+      text-align: left;
+      padding: 10px var(--space-md);
+      min-height: 44px;
+      background: var(--background);
+      border: 2px solid var(--outline-variant);
+      color: var(--on-surface);
+      font-family: var(--font-body);
+      font-size: 0.95rem;
+      cursor: pointer;
+    }
+    .quiz-option-btn:hover:not(:disabled) {
+      border-color: var(--outline);
+      background: var(--surface-container-low);
+    }
+    .quiz-option-btn.is-correct {
+      border-color: var(--positive);
+      background: var(--positive-container);
+      font-weight: 700;
+    }
+    .quiz-option-btn.is-wrong {
+      border-color: var(--error);
+      background: var(--error-container);
+      font-weight: 700;
+    }
+    .quiz-opt-letter {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      width: 24px;
+      height: 24px;
+      background: var(--surface-container);
+      font-weight: 800;
+      font-size: 0.8125rem;
+      flex-shrink: 0;
+    }
+    .quiz-feedback {
+      margin-top: var(--space-sm);
+      padding: var(--space-sm) var(--space-md);
+      font-size: 0.9375rem;
+    }
+    .quiz-feedback--ok {
+      border-left: var(--inset-rule-positive);
+      background: var(--positive-container);
+    }
+    .quiz-feedback--ko {
+      border-left: var(--inset-rule-error);
+      background: var(--error-container);
+    }
+    .quiz-actions-bar {
+      display: flex;
+      flex-wrap: wrap;
+      align-items: center;
+      justify-content: space-between;
+      gap: var(--space-md);
+      padding: var(--space-md);
+      background: var(--surface-container-low);
+      border-top: 2px solid var(--on-surface);
+    }
+
+    /* Bottom Page Navigation */
+    .page-pagination {
+      display: flex;
+      flex-wrap: wrap;
+      justify-content: space-between;
+      align-items: center;
+      gap: var(--space-sm);
+      margin-top: var(--space-xl);
+      padding-top: var(--space-lg);
+      border-top: 2px solid var(--on-surface);
+    }
+    .pagination-center {
+      display: flex;
+      gap: var(--space-sm);
+    }
+
+    /* Right Sidebar (In This Page TOC) */
+    .sidebar-right {
+      position: sticky;
+      top: calc(var(--header-h) + var(--space-lg));
+      max-height: calc(100vh - var(--header-h) - var(--space-xl));
+      overflow-y: auto;
+      border-left: 1px solid var(--outline-variant);
+      padding-left: var(--space-md);
+    }
+    .toc-list {
+      list-style: none;
+      margin: 0 0 var(--space-md) 0;
+      padding: 0;
+      display: flex;
+      flex-direction: column;
+      gap: 4px;
+    }
+    .toc-link {
+      display: flex;
+      align-items: flex-start;
+      justify-content: space-between;
+      gap: var(--space-xs);
+      padding: 6px 8px;
+      font-size: 0.84rem;
+      line-height: 1.3;
+      color: var(--on-surface-variant);
+      text-decoration: none;
+      border-left: 3px solid transparent;
+    }
+    .toc-link:hover {
+      color: var(--tertiary);
+      background: var(--surface-container-low);
+    }
+    .toc-link.is-current {
+      color: var(--on-surface);
+      font-weight: 700;
+      border-left-color: var(--tertiary);
+      background: var(--surface-container-low);
+    }
+    .toc-dot {
+      font-size: 0.75rem;
+      font-weight: 800;
+      color: var(--positive);
+      flex-shrink: 0;
+    }
+    .back-to-top-btn {
+      width: 100%;
+      justify-content: center;
+    }
+
+    /* Mobile TOC Quick Strip */
+    .mobile-toc-details {
+      display: none;
+      margin-bottom: var(--space-md);
+      border: 1px solid var(--outline);
+      background: var(--surface-container-low);
+    }
+    .mobile-toc-details summary {
+      padding: var(--space-sm) var(--space-md);
+      font-weight: 700;
+      cursor: pointer;
+      min-height: 44px;
+      display: flex;
+      align-items: center;
+    }
+
+    /* Footer (9-10 pt as specified) */
+    .site-footer {
+      border-top: 4px solid var(--primary);
+      background: var(--surface-container-low);
+      padding: var(--space-lg);
+      font-size: var(--footer-size);
+      line-height: 1.45;
+      color: var(--on-surface-variant);
+    }
+    .footer-inner {
+      max-width: 1440px;
+      margin: 0 auto;
+      display: grid;
+      grid-template-columns: 1fr auto;
+      gap: var(--space-md);
+      align-items: start;
+    }
+    .footer-title {
+      font-weight: 800;
+      color: var(--on-surface);
+      margin: 0 0 4px 0;
+    }
+    .footer-sources {
+      margin: 0 0 6px 0;
+    }
+    .footer-credit {
+      margin: 0;
+      font-weight: 700;
+      color: var(--on-surface);
+    }
+    .footer-prompt-btn {
+      font-size: var(--footer-size);
+      min-height: 40px;
+      padding: 6px 12px;
+    }
+
+    /* Modal Dialog */
+    .modal-overlay {
+      position: fixed;
+      inset: 0;
+      z-index: 200;
+      background: rgba(11, 12, 12, 0.72);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      padding: var(--space-md);
+    }
+    .modal-overlay[hidden] {
+      display: none;
+    }
+    .modal-box {
+      background: var(--background);
+      border: 3px solid var(--outline);
+      border-top: 6px solid var(--primary);
+      max-width: 760px;
+      width: 100%;
+      max-height: 85vh;
+      display: flex;
+      flex-direction: column;
+    }
+    .modal-head {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      gap: var(--space-md);
+      padding: var(--space-md);
+      border-bottom: 1px solid var(--outline-variant);
+      background: var(--surface-container-low);
+    }
+    .modal-head h2 {
+      margin: 0;
+      font-size: 1.15rem;
+      font-weight: 800;
+    }
+    .modal-body {
+      padding: var(--space-md);
+      overflow-y: auto;
+    }
+    .prompt-pre {
+      white-space: pre-wrap;
+      font-family: var(--font-body);
+      font-size: 0.9375rem;
+      line-height: 1.5;
+      background: var(--surface-container-low);
+      border-left: var(--inset-rule);
+      padding: var(--space-md);
+      margin: 0;
+    }
+
+    /* Responsive Breakpoints */
+    @media (max-width: 1120px) {
+      .doc-shell {
+        grid-template-columns: 250px minmax(0, 1fr);
+      }
+      .sidebar-right {
+        display: none;
+      }
+      .mobile-toc-details {
+        display: block;
+      }
+    }
+
+    @media (max-width: 860px) {
+      .header-inner {
+        grid-template-columns: 1fr auto;
+        grid-template-rows: auto auto;
+      }
+      .header-search {
+        grid-column: 1 / -1;
+        order: 3;
+      }
+      .mobile-menu-btn {
+        display: inline-flex;
+      }
+      .doc-shell {
+        grid-template-columns: 1fr;
+        padding: var(--space-md);
+      }
+      .sidebar-left {
+        display: none;
+        position: fixed;
+        top: 0;
+        left: 0;
+        bottom: 0;
+        width: min(320px, 88vw);
+        max-height: 100vh;
+        background: var(--background);
+        z-index: 150;
+        padding: var(--space-md);
+        border-right: 3px solid var(--outline);
+      }
+      .sidebar-left.is-open {
+        display: block;
+      }
+      .sidebar-mobile-close {
+        display: inline-flex;
+      }
+      .sidebar-backdrop.is-open {
+        display: block;
+        position: fixed;
+        inset: 0;
+        background: var(--backdrop-scrim);
+        z-index: 140;
+      }
+    }
+
+    @media (max-width: 640px) {
+      .header-inner {
+        padding: var(--space-sm);
+      }
+      .header-progress {
+        min-width: 0;
+      }
+      .progress-track {
+        width: 110px;
+      }
+      .brand-sub {
+        display: none;
+      }
+      .footer-inner {
+        grid-template-columns: 1fr;
+      }
+      .page-pagination {
+        flex-direction: column;
+        align-items: stretch;
+      }
+      .page-pagination .button {
+        width: 100%;
+      }
+      .pagination-center {
+        flex-direction: column;
+      }
+    }
+
+    @media (prefers-reduced-motion: reduce) {
+      *, *::before, *::after {
+        animation-duration: 0.01ms !important;
+        transition-duration: 0.01ms !important;
+        scroll-behavior: auto !important;
+      }
+    }
+  </style>
+</head>
+<body>
+  <a class="skip-link" href="#main-content">Salta al contenuto principale</a>
+
+  <header class="site-header" role="banner">
+    <div class="header-inner">
+      <div class="header-left">
+        <button type="button" id="mobile-menu-btn" class="mobile-menu-btn" aria-expanded="false" aria-controls="left-sidebar" onclick="toggleMobileNav()">
+          <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" aria-hidden="true">
+            <line x1="3" y1="6" x2="21" y2="6"></line>
+            <line x1="3" y1="12" x2="21" y2="12"></line>
+            <line x1="3" y1="18" x2="21" y2="18"></line>
+          </svg>
+          <span>Menu</span>
+        </button>
+        <button type="button" class="site-brand" onclick="navigateTo('home')" aria-label="Torna alla Home — Attestazioni negli Atti Contabili">
+          <span class="brand-mark" aria-hidden="true">
+            <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2">
+              <path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"></path>
+              <polyline points="14 2 14 8 20 8"></polyline>
+              <polyline points="9 15 11 17 15 13"></polyline>
+            </svg>
+          </span>
+          <span class="brand-text">
+            <span class="brand-title">Attestazioni negli Atti Contabili</span>
+            <span class="brand-sub">Guida Operativa Ragioneria — Enti Locali</span>
+          </span>
+        </button>
+      </div>
+
+      <div class="header-search" role="search">
+        <label for="doc-search" class="sr-only">Cerca parole chiave nella documentazione</label>
+        <div class="search-field-wrap">
+          <span class="search-icon-box" aria-hidden="true">
+            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4">
+              <circle cx="11" cy="11" r="8"></circle>
+              <line x1="21" y1="21" x2="16.65" y2="16.65"></line>
+            </svg>
+          </span>
+          <input id="doc-search" class="search-input" type="search" placeholder="Cerca (es. PRFP, CUP, DURC, 48-bis, GESEPA, bollo…)" oninput="handleSearchInput(this.value)" onkeydown="handleSearchKeydown(event)" autocomplete="off">
+          <button type="button" id="search-clear-btn" class="search-clear-btn" onclick="clearSearch()" hidden aria-label="Pulisci ricerca">✕</button>
+        </div>
+        <div id="search-results" class="search-results-panel" role="region" aria-label="Risultati di ricerca" aria-live="polite" hidden></div>
+      </div>
+
+      <div class="header-progress" aria-label="Avanzamento lettura globale">
+        <div class="progress-meta-row">
+          <span id="global-progress-label">0 / 21 letti</span>
+          <span id="global-progress-pct" class="progress-pct-badge">0%</span>
+        </div>
+        <div class="progress-track" role="progressbar" aria-valuemin="0" aria-valuemax="100" aria-valuenow="0" id="global-progress-bar-wrap">
+          <div class="progress-fill" id="global-progress-fill"></div>
+        </div>
+      </div>
+    </div>
+  </header>
+
+  <div id="sidebar-backdrop" class="sidebar-backdrop" onclick="closeMobileNav()"></div>
+
+  <div class="doc-shell">
+    <aside id="left-sidebar" class="sidebar-left" aria-label="Navigazione capitoli">
+      <button type="button" class="button button--secondary sidebar-mobile-close" onclick="closeMobileNav()">✕ Chiudi menu</button>
+      <div class="sidebar-section-label">Struttura della guida</div>
+      <nav aria-label="Indice dei capitoli">
+        <ul id="chapter-nav-list" class="chapter-nav-list"></ul>
+      </nav>
+    </aside>
+
+    <main id="main-content" class="doc-main" tabindex="-1">
+      <details id="mobile-toc-details" class="mobile-toc-details">
+        <summary>Indice dei paragrafi in questa pagina</summary>
+        <nav aria-label="Indice mobile paragrafi">
+          <ul id="mobile-toc-list" class="toc-list" style="padding: 0 var(--space-sm) var(--space-sm) var(--space-sm);"></ul>
+        </nav>
+      </details>
+
+      <div id="page-content">
+        <div id="delib-simulator-output" hidden></div>
+        <div id="liq-checker-output" hidden></div>
+        <div id="quiz-mount" hidden></div>
+        <select id="delib-riflessi" hidden><option value="no">no</option></select>
+        <select id="delib-prfp" hidden><option value="si">si</option></select>
+        <select id="delib-partecipate" hidden><option value="no">no</option></select>
+        <select id="liq-subject" hidden><option value="impresa">impresa</option></select>
+        <input id="liq-amount" type="hidden" value="0">
+        <select id="liq-funding" hidden><option value="comunale">comunale</option></select>
+        <select id="liq-iva" hidden><option value="ordinaria">ordinaria</option></select>
+      </div>
+
+      <nav class="page-pagination" aria-label="Navigazione tra le pagine">
+        <button type="button" id="btn-prev-page" class="button button--secondary" onclick="goPrevPage()">← Pagina precedente</button>
+        <div class="pagination-center">
+          <button type="button" id="btn-home-page" class="button button--secondary" onclick="navigateTo('home')">Torna alla Home</button>
+        </div>
+        <button type="button" id="btn-next-page" class="button" onclick="goNextPage()">Pagina successiva →</button>
+      </nav>
+    </main>
+
+    <aside class="sidebar-right" aria-label="Indice della pagina corrente">
+      <div class="sidebar-section-label">In questa pagina</div>
+      <nav aria-label="Paragrafi del capitolo">
+        <ul id="right-toc-list" class="toc-list"></ul>
+      </nav>
+      <button type="button" class="button button--secondary back-to-top-btn" onclick="scrollToTop()">↑ Torna su</button>
+    </aside>
+  </div>
+
+  <footer class="site-footer" role="contentinfo">
+    <div class="footer-inner">
+      <div>
+        <p class="footer-title">Attestazioni e Dichiarazioni di Natura Contabile nelle Determinazioni Dirigenziali e nelle Deliberazioni GC/CC</p>
+        <p class="footer-sources">
+          <strong>Fonti principali:</strong> Regolamento di Contabilità del Comune di Palermo (Del. C.C. n. 58/2019); D.Lgs. 267/2000 (TUEL); D.Lgs. 118/2011 All. 4/2 e DM 10/10/2024; D.Lgs. 36/2023; PRFP (Del. C.C. n. 6/2022 e n. 98/2023); Note e Circolari della Ragioneria Generale (prot. AREG/1034085/2022, 835883/2023, 932708/2023, 165984/2024, 671034/2024, 774062/2024, 938734/2024, 1244990/2024, 185294/2025, 309000/2025, 338379/2025, 793652/2025, 1595219/2025, 1615160/2025, email 10/12/2025, 13959/2026, 33695/2026, 53547/2026, 176910/2026, 323751/2026, 334077/2026, 679702/2026, 751429/2026); Direttive del Segretario Generale (prot. 869237/2012, 1616658/2023, 747138/2024, 802891/2026).
+        </p>
+        <p class="footer-credit">Sito generato da Google Notebook su prompt di Ciro Spataro — Realizzato il 20 novembre 2026</p>
+      </div>
+      <div>
+        <button type="button" class="button button--secondary footer-prompt-btn" onclick="openPromptModal()">Prompt utilizzato</button>
+      </div>
+    </div>
+  </footer>
+
+  <div id="prompt-modal" class="modal-overlay" role="dialog" aria-modal="true" aria-labelledby="prompt-modal-title" hidden onclick="handleModalBackdropClick(event)">
+    <div class="modal-box">
+      <div class="modal-head">
+        <h2 id="prompt-modal-title">Prompt utilizzato per la generazione</h2>
+        <button type="button" id="prompt-close-btn" class="button button--secondary" onclick="closePromptModal()" aria-label="Chiudi finestra prompt">Chiudi ✕</button>
+      </div>
+      <div class="modal-body">
+        <pre id="prompt-full-text" class="prompt-pre"></pre>
+      </div>
+    </div>
+  </div>
+
+  <api-shim></api-shim>
+
+  <script>
+    const PROMPT_USED_TEXT = `Crea un sito web interattivo di documentazione (in stile GitBook) basato sulle fonti del notebook relative a 'Dichiarazioni e attestazioni di natura contabile nelle determinazioni dirigenziali (impegni e liquidazioni) e nelle deliberazioni (GC e CC)'.
+
+STRUTTURA E ARGOMENTI:
+Organizza il sito in capitoli logici e paragrafi:
+- Capitolo 1: Quadro Generale e Principi Contabili (Attestazioni ex art. 147-bis TUEL, Regolamento di Contabilità, riflessi su bilancio e patrimonio)
+- Capitolo 2: Attestazioni nelle Deliberazioni (GC e CC: riflessi economico-finanziari e compatibilità con il Piano di Riequilibrio)
+- Capitolo 3: Attestazioni nelle Determinazioni di Impegno (Compatibilità monetaria e di cassa, assenza conflitto d'interessi, verifica requisiti e congruità prezzi, affidamenti diretti, esigibilità di spesa a fine anno)
+- Capitolo 4: Spese Finanziate con Fondi Vincolati ed Extracomunali (Destinazione vincolata, ammissibilità a rendiconto, rispetto delle tempistiche di spesa e pagamento)
+- Capitolo 5: Attestazioni nelle Determinazioni di Liquidazione (Assenza cause ostative e pregiudizievoli, verifica tempestività pagamenti/scadenze fatture, compensazioni legali GESEPA, regolarità contributiva DURC e imposta di bollo)
+- Capitolo 6: Autovalutazione (Quiz a risposta multipla con feedback immediato sul punteggio conseguito, livello di preparazione e pulsante di reset per ricominciare).
+
+REQUISITI DI INTERFACCIA E NAVIGAZIONE (Stile GitBook):
+- Layout a tre colonne / documentazione: menu dei capitoli a sinistra (sidebar navigabile), indice dei paragrafi a destra (con pulsante/freccia 'Torna su'), contenuto principale al centro.
+- Mobile responsive: navigazione sandwich per smartphone e tablet, pulsanti 'Pagina precedente' e 'Pagina successiva' a fondo pagina, e pulsante per tornare alla Home da qualsiasi schermata.
+- Sistema di tracciamento lettura: per ogni capitolo/paragrafo pulsanti 'Letto' / 'Da leggere' con barra di avanzamento e percentuale globale di completamento visibile nell'header fisso.
+- Header fisso: barra di ricerca interattiva per trovare parole chiave nel testo, titolo del sito cliccabile che riporta alla Home, indicatore percentuale di avanzamento lettura.
+- Home page: introduzione con data di realizzazione, specifica che il sito è generato tramite Google Notebook su prompt specifico, e sintesi dei capitoli.
+- Footer: caratteri piccoli (9-10 pt), con titolo del sito, elenco abbreviato delle fonti principali (note e circolari della Ragioneria Generale e Segretario Generale), dicitura 'Sito generato da Google Notebook su prompt di Ciro Spataro', e un pulsante/popup 'Prompt utilizzato' che mostra per intero le istruzioni del prompt di creazione.
+- Elementi visivi: box di evidenziazione, tabelle con le formule esatte delle dichiarazioni, infografiche e diagrammi visuali di processo/mappa concettuale integrati.
+- Accessibilità: piena rispondenza alle linee guida AGID per la PA e sintassi impeccabile in lingua italiana.`;
+
+    const PAGES = [
+      {
+        id: 'home',
+        num: 'H',
+        shortTitle: 'Home e Panoramica',
+        title: `Dichiarazioni e Attestazioni negli Atti Contabili`,
+        subtitle: `Guida operativa interattiva alla redazione di determinazioni dirigenziali (impegni e liquidazioni) e deliberazioni di Giunta e Consiglio Comunale`,
+        sections: []
+      },
+      {
+        id: 'cap1',
+        num: '1',
+        shortTitle: 'Quadro Generale e Principi',
+        title: `Capitolo 1 — Quadro Generale e Principi Contabili`,
+        subtitle: `Fondamenti normativi, ruolo della Ragioneria Generale, controllo di regolarità ex art. 147-bis TUEL, riflessi sul bilancio e sul patrimonio.`,
+        sections: [
+          {
+            id: 'cap1-1',
+            badge: '1.1',
+            title: `Ruolo della Ragioneria Generale e Regolamento di Contabilità`,
+            refs: [`Del. C.C. n. 58 del 07/03/2019`, `Nota AREG/185294 del 21/02/2025`, `Nota AREG/1615160 del 19/11/2025`],
+            html: `
+              <p>Le attestazioni e le dichiarazioni da riportare negli atti amministrativi aventi rilevanza contabile (accertamenti, prenotazioni, impegni, liquidazioni e pagamenti) costituiscono un presidio essenziale di legalità finanziaria, attuativo del vigente <strong>Regolamento comunale di contabilità</strong> (approvato con Deliberazione di C.C. n. 58 del 07/03/2019) e delle circolari interpretative emanate dalla Ragioneria Generale ai sensi dell’art. 3, commi 4 e 5.</p>
+              <p>Con la circolare prot. <strong>AREG/185294 del 21/02/2025</strong>, il Ragioniere Generale (Responsabile del servizio finanziario ex art. 153 TUEL) ha ribadito l’obbligo giuridico gravante sulla dirigenza — che nell’esercizio delle proprie funzioni riveste la qualità di pubblico ufficiale — di garantire la corretta programmazione e destinazione delle risorse pubbliche, scongiurando ipotesi di indebita destinazione di fondi e possibili profili di danno erariale.</p>
+              <div class="inset inset--warning">
+                <p class="inset-title">Termini perentori di trasmissione (Nota AREG/1615160 del 19/11/2025)</p>
+                <p>Le determinazioni dirigenziali che dispongono impegni di spesa devono essere trasmesse alla Ragioneria Generale nel rigoroso rispetto dei termini fissati dagli artt. 7, comma 1, e 27, comma 6, del Regolamento di Contabilità. È vietato trasmettere gli atti a ridosso o lo stesso giorno dell’avvio delle prestazioni: il visto di copertura finanziaria ex art. 183 del TUEL deve precedere l’esecuzione, pena il configurarsi di debiti fuori bilancio.</p>
+              </div>
+              <div class="table-wrap">
+                <table class="doc-table">
+                  <thead>
+                    <tr>
+                      <th>Articolo Reg. Contabilità</th>
+                      <th>Ambito disciplinato</th>
+                      <th>Adempimento operativo richiesto</th>
+                    </tr>
+                  </thead>
+                  <tbody>
+                    <tr>
+                      <td><strong>Art. 3, commi 4 e 5</strong></td>
+                      <td>Circolari Ragioneria Generale</td>
+                      <td>Emanazione di direttive interpretative e modelli di attestazione vincolanti per gli uffici.</td>
+                    </tr>
+                    <tr>
+                      <td><strong>Art. 5, comma 2</strong></td>
+                      <td>Proposte di deliberazione GC/CC</td>
+                      <td>Obbligo di illustrare o escludere i riflessi diretti e indiretti su bilancio e patrimonio.</td>
+                    </tr>
+                    <tr>
+                      <td><strong>Art. 7 c. 1 e Art. 27</strong></td>
+                      <td>Determinazioni di impegno</td>
+                      <td>Contenuto informativo minimo dell’impegno e rispetto dei termini di inoltro per il visto.</td>
+                    </tr>
+                    <tr>
+                      <td><strong>Art. 31, commi 2, 5 e 6</strong></td>
+                      <td>Determinazioni di liquidazione</td>
+                      <td>Verifica regolarità, conformità al contratto e congruità dei prezzi quale assunzione di responsabilità.</td>
+                    </tr>
+                    <tr>
+                      <td><strong>Art. 32, comma 3</strong></td>
+                      <td>Ordine cronologico pagamenti</td>
+                      <td>Possibilità di deroga motivata (es. fondi extracomunali a rendicontazione).</td>
+                    </tr>
+                    <tr>
+                      <td><strong>Art. 35</strong></td>
+                      <td>Equilibri di bilancio</td>
+                      <td>Controllo periodico coordinato dal Ragioniere Generale ex art. 147-quinquies TUEL.</td>
+                    </tr>
+                  </tbody>
+                </table>
+              </div>
+            `
+          },
+          {
+            id: 'cap1-2',
+            badge: '1.2',
+            title: `Controllo Preventivo ex Art. 147-bis TUEL ed Equilibri Finanziari`,
+            refs: [`Art. 147-bis D.Lgs. 267/2000`, `Circ. AREG/53547 del 16/01/2026`, `Nota AREG/309000 del 31/03/2025`],
+            html: `
+              <p>L’art. 147-bis, comma 1, del D.Lgs. 267/2000 (TUEL) incardina in capo a ciascun Dirigente la funzione di garante della regolarità amministrativa nella fase preventiva di formazione dell’atto. L’attestazione di regolarità e correttezza amministrativa non è una formula di stile, ma certifica sia la legittimità formale sia la correttezza sostanziale dell’istruttoria preordinata al provvedimento.</p>
+              <p>Con circolare prot. <strong>AREG/53547 del 16/01/2026</strong>, la Ragioneria Generale ha precisato che il rilascio dell’attestazione ex art. 147-bis del TUEL nelle determinazioni di liquidazione ricomprende e certifica anche il corretto adempimento delle verifiche sull’<strong>imposta di bollo sulle fatture elettroniche</strong> e sull’<strong>assoggettabilità previdenziale alla Gestione Separata INPS</strong> di professionisti e collaboratori.</p>
+              <div class="formula-box">
+                <div class="formula-box-head">
+                  <span class="formula-label">Formula — Regolarità tecnica e correttezza amministrativa (DD Impegno / Liquidazione)</span>
+                  <button type="button" class="button--copy" onclick="copyFormula(this)">Copia formula</button>
+                </div>
+                <p class="formula-text" data-formula="Si attesta la regolarità tecnica e la correttezza amministrativa dell’atto ai sensi e per gli effetti di quanto dispone l’art. 147-bis del D.Lgs. n. 267/2000, nonché il rispetto di tutte le condizioni contenute nella circolare della Ragioneria Generale prot. AREG/53547 del 16/01/2026.">“Si attesta la regolarità tecnica e la correttezza amministrativa dell’atto ai sensi e per gli effetti di quanto dispone l’art. 147-bis del D.Lgs. n. 267/2000, nonché il rispetto di tutte le condizioni contenute nella circolare della Ragioneria Generale prot. AREG/53547 del 16/01/2026.”</p>
+              </div>
+              <p>In parallelo, il controllo periodico sugli <strong>equilibri di bilancio</strong> (art. 147-quinquies TUEL e art. 35 Reg. Cont., richiamato dalla nota prot. <strong>AREG/309000 del 31/03/2025</strong>) impegna i dirigenti a monitorare la persistenza dell’equilibrio di parte corrente, in conto capitale, delle entrate a destinazione vincolata, dei flussi di cassa, l’eventuale insorgenza di debiti fuori bilancio privi di copertura e l’impatto finanziario delle società ed organismi partecipati.</p>
+            `
+          },
+          {
+            id: 'cap1-3',
+            badge: '1.3',
+            title: `Riflessi su Bilancio, Patrimonio, QTE in Excel e Spese d’Investimento`,
+            refs: [`Nota 593930 del 11/05/2020`, `Nota AREG/927414 del 14/09/2022`, `Nota AREG/774062 del 28/05/2024`, `Circ. AREG/1244990 del 22/10/2024`],
+            html: `
+              <p>Le direttive prot. <strong>593930 del 11/05/2020</strong> e <strong>AREG/927414 del 14/09/2022</strong> hanno vietato espressamente formule generiche quali <em>“il presente provvedimento non comporta oneri a carico del bilancio”</em> oppure il rinvio implicito alla lettura degli allegati. Il dirigente deve dichiarare in seno all’atto, in modo esplicito e inequivocabile, l’assenza o la presenza di riflessi diretti e indiretti sulla situazione economico-finanziaria e patrimoniale dell’Ente.</p>
+              <div class="inset">
+                <p class="inset-title">Allegato obbligatorio del Quadro Tecnico Economico (Nota AREG/774062 del 28/05/2024)</p>
+                <p>Per tutte le proposte di deliberazione e le determinazioni dirigenziali che prevedono l’approvazione o la modifica di un <strong>Quadro Tecnico Economico (QTE)</strong>, è obbligatorio inserire il QTE tra gli allegati all’atto <strong>in formato Excel</strong>, trasmettendo alla Ragioneria Generale anche tutti gli atti modificativi dello stesso.</p>
+              </div>
+              <h3>Regole per le spese di investimento e Fondo Pluriennale Vincolato (DM 10/10/2024)</h3>
+              <p>Con circolare prot. <strong>AREG/1244990 del 22/10/2024</strong> (seguita alla precedente <strong>AREG/1007579 del 22/09/2023</strong>), la Ragioneria Generale ha recepito l’aggiornamento al Principio contabile applicato 4/2 al D.Lgs. 118/2011 (punti 5.3.14 e 5.4.9) coordinato con il D.Lgs. 36/2023:</p>
+              <ul>
+                <li>L’iscrizione al Titolo II dell’intero stanziamento richiede l’inserimento dell’opera nel Programma Triennale dei Lavori Pubblici (soglia ≥ € 150.000).</li>
+                <li>La progettazione antecedente all’inserimento dello stanziamento dell’opera in bilancio si imputa al codice PdC <strong>U.2.02.03.05.001</strong> (“Incarichi professionali per la realizzazione di investimenti”).</li>
+                <li>Gli stanziamenti sono interamente <strong>prenotati</strong> con la decisione di contrarre (art. 17, c. 1, D.Lgs. 36/2023 e art. 192 TUEL) e impegnati alla stipula dei contratti (o all’aggiudicazione nei casi di esecuzione anticipata ex art. 17, c. 8). Per gli accordi quadro, l’impegno nasce alla stipula dei singoli contratti attuativi.</li>
+                <li>La conservazione del <strong>Fondo Pluriennale Vincolato (FPV)</strong> per spese non ancora impegnate (≥ € 150.000) richiede il pieno accertamento delle entrate, l’inserimento nel programma triennale e l’avvio formale delle procedure (pubblicazione bando/avviso, preinformazione con invito o trasmissione inviti ex art. 76).</li>
+              </ul>
+              <div class="diagram-card">
+                <svg class="diagram-svg" viewBox="0 0 820 210" role="img" aria-label="Schema del sistema integrato dei controlli contabili: istruttoria dirigenziale, controllo di regolarità contabile della Ragioneria Generale ed equilibri di bilancio">
+                  <rect x="10" y="25" width="230" height="150" fill="var(--background)" stroke="var(--primary)" stroke-width="2"></rect>
+                  <rect x="10" y="25" width="230" height="32" fill="var(--primary)"></rect>
+                  <text x="22" y="46" fill="var(--on-primary)" font-size="13" font-weight="800">1. ISTRUTTORIA DIRIGENZIALE</text>
+                  <text x="22" y="78" fill="var(--on-surface)" font-size="12" font-weight="700">• Art. 147-bis TUEL</text>
+                  <text x="22" y="98" fill="var(--on-surface-variant)" font-size="11.5">Regolarità tecnica e sostanziale</text>
+                  <text x="22" y="122" fill="var(--on-surface)" font-size="12" font-weight="700">• Art. 5 / 27 / 31 Reg. Cont.</text>
+                  <text x="22" y="142" fill="var(--on-surface-variant)" font-size="11.5">Riflessi, PRFP, congruità, QTE Excel</text>
+                  <text x="22" y="162" fill="var(--on-surface-variant)" font-size="11.5">Conflitto interessi e tracciabilità</text>
+
+                  <line x1="245" y1="100" x2="290" y2="100" stroke="var(--tertiary)" stroke-width="3"></line>
+                  <polygon points="290,94 302,100 290,106" fill="var(--tertiary)"></polygon>
+
+                  <rect x="305" y="25" width="230" height="150" fill="var(--background)" stroke="var(--tertiary)" stroke-width="2"></rect>
+                  <rect x="305" y="25" width="230" height="32" fill="var(--tertiary)"></rect>
+                  <text x="317" y="46" fill="var(--on-primary)" font-size="13" font-weight="800">2. RAGIONERIA GENERALE</text>
+                  <text x="317" y="78" fill="var(--on-surface)" font-size="12" font-weight="700">• Art. 153 e 183 c. 7-8 TUEL</text>
+                  <text x="317" y="98" fill="var(--on-surface-variant)" font-size="11.5">Visto di regolarità contabile</text>
+                  <text x="317" y="122" fill="var(--on-surface)" font-size="12" font-weight="700">• Verifica attestazioni formali</text>
+                  <text x="317" y="142" fill="var(--on-surface-variant)" font-size="11.5">Copertura finanziaria e di cassa</text>
+                  <text x="317" y="162" fill="var(--error)" font-size="11.5" font-weight="700">Restituzione se atto incompleto</text>
+
+                  <line x1="540" y1="100" x2="585" y2="100" stroke="var(--positive)" stroke-width="3"></line>
+                  <polygon points="585,94 597,100 585,106" fill="var(--positive)"></polygon>
+
+                  <rect x="600" y="25" width="210" height="150" fill="var(--background)" stroke="var(--positive)" stroke-width="2"></rect>
+                  <rect x="600" y="25" width="210" height="32" fill="var(--positive)"></rect>
+                  <text x="612" y="46" fill="var(--on-primary)" font-size="13" font-weight="800">3. EQUILIBRI E MANDATI</text>
+                  <text x="612" y="78" fill="var(--on-surface)" font-size="12" font-weight="700">• Art. 147-quinquies TUEL</text>
+                  <text x="612" y="98" fill="var(--on-surface-variant)" font-size="11.5">Salvaguardia equilibri (art. 35)</text>
+                  <text x="612" y="122" fill="var(--on-surface)" font-size="12" font-weight="700">• PCC &amp; Tesoreria</text>
+                  <text x="612" y="142" fill="var(--on-surface-variant)" font-size="11.5">Rispetto termini di pagamento</text>
+                  <text x="612" y="162" fill="var(--on-surface-variant)" font-size="11.5">Rendicontazione fondi vincolati</text>
+                </svg>
+                <p class="diagram-caption">Figura 1.1 — Catena di responsabilità tra Dirigente proponente, Ragioneria Generale ed equilibri complessivi dell’Ente.</p>
+              </div>
+            `
+          }
+        ]
+      },
+      {
+        id: 'cap2',
+        num: '2',
+        shortTitle: 'Deliberazioni GC e CC',
+        title: `Capitolo 2 — Attestazioni nelle Deliberazioni (GC e CC)`,
+        subtitle: `Dichiarazioni obbligatorie nelle proposte di deliberazione della Giunta Comunale e del Consiglio Comunale su riflessi economico-patrimoniali, PRFP e società comunali.`,
+        sections: [
+          {
+            id: 'cap2-1',
+            badge: '2.1',
+            title: `Riflessi Economico-Finanziari e Patrimoniali (Art. 5, c. 2 Reg. Cont.)`,
+            refs: [`Nota AREG/165984 del 13/02/2024`, `Nota AREG/185294 del 21/02/2025`, `Nota AREG/927414 del 14/09/2022`],
+            html: `
+              <p>Su ogni proposta di deliberazione sottoposta alla Giunta Comunale o al Consiglio Comunale che non costituisca mero atto di indirizzo, il dirigente proponente è tenuto a richiedere il parere di regolarità tecnica e a <strong>indicare, ovvero escludere, i riflessi diretti e indiretti sulla situazione economico-finanziaria e sul patrimonio dell’Ente</strong>, relazionando puntualmente nel testo dell’atto.</p>
+              <p>Possono presentarsi due fattispecie alternative:</p>
+              <ul>
+                <li><strong>Caso A — Assenza di riflessi:</strong> se l’atto non incide né sull’esercizio in corso né sui successivi, è ammessa esclusivamente la formula tassativa prevista dalla Ragioneria Generale.</li>
+                <li><strong>Caso B — Presenza di riflessi:</strong> occorre specificare analiticamente nell’atto:
+                  <ol>
+                    <li>se è prevista una spesa diretta da imputare all’esercizio in corso o anche ai successivi, indicando le <strong>relative coperture di bilancio</strong>;</li>
+                    <li>se è previsto l’<strong>utilizzo di beni dell’Ente</strong>, indicando se da tale utilizzo derivino rischi per i quali sia necessario costituire un accantonamento per spese future.</li>
+                  </ol>
+                </li>
+              </ul>
+              <div class="formula-box">
+                <div class="formula-box-head">
+                  <span class="formula-label">Formula — Assenza di riflessi economico-finanziari e patrimoniali (Delibere GC/CC)</span>
+                  <button type="button" class="button--copy" onclick="copyFormula(this)">Copia formula</button>
+                </div>
+                <p class="formula-text" data-formula="Il presente atto non comporta alcun riflesso sulla situazione economico-finanziaria e/o patrimoniale dell’Ente, né nell’esercizio finanziario in corso, né in quelli successivi.">“Il presente atto non comporta alcun riflesso sulla situazione economico-finanziaria e/o patrimoniale dell’Ente, né nell’esercizio finanziario in corso, né in quelli successivi.”</p>
+              </div>
+            `
+          },
+          {
+            id: 'cap2-2',
+            badge: '2.2',
+            title: `Compatibilità con il Piano di Riequilibrio Finanziario Pluriennale (PRFP)`,
+            refs: [`Del. C.C. n. 6 del 31/01/2022`, `Del. C.C. n. 98 del 29/06/2023`, `Nota AREG/932708 del 29/08/2023`, `Nota AREG/185294 del 21/02/2025`],
+            html: `
+              <p>In attuazione del Piano di Riequilibrio Finanziario Pluriennale (PRFP) adottato con Deliberazione di C.C. n. 6 del 31/01/2022 e rimodulato con Deliberazione di C.C. n. 98 del 29/06/2023, ogni proposta deliberativa deve dare conto del proprio rapporto rispetto alle misure di risanamento.</p>
+              <div class="formula-box">
+                <div class="formula-box-head">
+                  <span class="formula-label">Formula 1 — Atto attuativo di azione/misura prevista nel PRFP</span>
+                  <button type="button" class="button--copy" onclick="copyFormula(this)">Copia formula</button>
+                </div>
+                <p class="formula-text" data-formula="Si attesta che l’atto risulta attuativo del piano di riequilibrio adottato con deliberazione del Consiglio Comunale n. 6 del 31.01.2022, rimodulato con deliberazione del Consiglio Comunale n. 98 del 29.06.2023 e che non determina alcun aumento della spesa corrente sotto alcun profilo.">“Si attesta che l’atto risulta attuativo del piano di riequilibrio adottato con deliberazione del Consiglio Comunale n. 6 del 31.01.2022, rimodulato con deliberazione del Consiglio Comunale n. 98 del 29.06.2023 e che non determina alcun aumento della spesa corrente sotto alcun profilo.”</p>
+              </div>
+              <div class="formula-box">
+                <div class="formula-box-head">
+                  <span class="formula-label">Formula 2 — Azione o misura NON prevista nel PRFP</span>
+                  <button type="button" class="button--copy" onclick="copyFormula(this)">Copia formula</button>
+                </div>
+                <p class="formula-text" data-formula="La spesa non si pone in contrasto con il piano di riequilibrio adottato con deliberazione del Consiglio Comunale n. 6 del 31.01.2022, rimodulato con deliberazione del Consiglio Comunale n. 98 del 29.06.2023 sotto qualsiasi profilo, sia esso diretto e/o indiretto.">“La spesa non si pone in contrasto con il piano di riequilibrio adottato con deliberazione del Consiglio Comunale n. 6 del 31.01.2022, rimodulato con deliberazione del Consiglio Comunale n. 98 del 29.06.2023 sotto qualsiasi profilo, sia esso diretto e/o indiretto.”</p>
+              </div>
+              <p>Si raccomanda inoltre di indicare specificamente la misura o azione del PRFP quando ricorre la prima fattispecie (nota AREG/932708 del 29/08/2023).</p>
+            `
+          },
+          {
+            id: 'cap2-3',
+            badge: '2.3',
+            title: `Affidamenti a Società Comunali, Allegati QTE e Simulatore Delibere`,
+            refs: [`Del. C.C. n. 385 del 30/12/2020`, `Nota AREG/185294 del 21/02/2025`, `Nota AREG/774062 del 28/05/2024`],
+            html: `
+              <p>Qualora la proposta di deliberazione di Giunta o di Consiglio Comunale riguardi nuovi affidamenti a Società partecipate comunali, la scheda allegata alla nota <strong>AREG/185294 del 21/02/2025</strong> prescrive l’inserimento di una specifica attestazione sul rispetto del tetto dei corrispettivi:</p>
+              <div class="formula-box">
+                <div class="formula-box-head">
+                  <span class="formula-label">Formula — Nuovi affidamenti a Società comunali</span>
+                  <button type="button" class="button--copy" onclick="copyFormula(this)">Copia formula</button>
+                </div>
+                <p class="formula-text" data-formula="Si attesta che l’importo della spesa non eccede il limite dei corrispettivi di cui alla deliberazione del Consiglio Comunale n. 385 del 30/12/2020.">“Si attesta che l’importo della spesa non eccede il limite dei corrispettivi di cui alla deliberazione del Consiglio Comunale n. 385 del 30/12/2020.”</p>
+              </div>
+              <p>Inoltre, se la deliberazione approva o modifica un Quadro Tecnico Economico, il relativo file deve essere allegato in <strong>formato Excel</strong> (nota AREG/774062 del 28/05/2024).</p>
+
+              <div class="tool-panel" aria-labelledby="delib-tool-title">
+                <h3 id="delib-tool-title">Generatore guidato attestazioni per Proposte di Deliberazione GC/CC</h3>
+                <div class="tool-controls-grid">
+                  <div class="field-group">
+                    <label for="delib-riflessi" class="field-label">1. Comporta spesa o riflessi economico-patrimoniali?</label>
+                    <select id="delib-riflessi" class="field-select" onchange="updateDelibSimulator()">
+                      <option value="no">NO — Nessun riflesso diretto o indiretto</option>
+                      <option value="si">SÌ — Comporta spesa e/o utilizzo beni</option>
+                    </select>
+                  </div>
+                  <div class="field-group">
+                    <label for="delib-prfp" class="field-label">2. È attuativa di misure del PRFP?</label>
+                    <select id="delib-prfp" class="field-select" onchange="updateDelibSimulator()">
+                      <option value="si">SÌ — Attuativa di azione/misura PRFP</option>
+                      <option value="no">NO — Non prevista nel PRFP (non in contrasto)</option>
+                    </select>
+                  </div>
+                  <div class="field-group">
+                    <label for="delib-partecipate" class="field-label">3. Riguarda nuovi affidamenti a Società comunali?</label>
+                    <select id="delib-partecipate" class="field-select" onchange="updateDelibSimulator()">
+                      <option value="no">NO</option>
+                      <option value="si">SÌ — Nuovo affidamento a Società partecipata</option>
+                    </select>
+                  </div>
+                </div>
+                <div id="delib-simulator-output" class="inset inset--positive" aria-live="polite"></div>
+              </div>
+            `
+          }
+        ]
+      },
+      {
+        id: 'cap3',
+        num: '3',
+        shortTitle: 'Determinazioni di Impegno',
+        title: `Capitolo 3 — Attestazioni nelle Determinazioni di Impegno`,
+        subtitle: `Requisiti dell’art. 27 del Regolamento di Contabilità, compatibilità di cassa, conflitto di interessi, congruità prezzi, affidamenti diretti ed esigibilità a fine anno.`,
+        sections: [
+          {
+            id: 'cap3-1',
+            badge: '3.1',
+            title: `Elementi Essenziali (Art. 27 Reg. Cont.) e Perfezionamento dell’Obbligazione`,
+            refs: [`Art. 27 Regolamento di Contabilità`, `Art. 17 D.Lgs. 36/2023`, `Nota AREG/185294 del 21/02/2025`, `CAD D.Lgs. 82/2005`],
+            html: `
+              <p>Nella parte dispositiva della determinazione dirigenziale di impegno devono essere sempre dettagliati gli elementi costitutivi previsti dall’<strong>art. 27 del Regolamento di Contabilità</strong>:</p>
+              <div class="table-wrap">
+                <table class="doc-table">
+                  <thead>
+                    <tr>
+                      <th>Voce</th>
+                      <th>Contenuto obbligatorio da riportare nella Determinazione</th>
+                    </tr>
+                  </thead>
+                  <tbody>
+                    <tr><td><strong>a) – d) Obbligazione</strong></td><td>Motivazione della ragione del debito, quantificazione in euro della spesa, indicazione del soggetto creditore e data di scadenza dell’obbligazione.</td></tr>
+                    <tr><td><strong>e) – g) Imputazione</strong></td><td>Vincolo sullo stanziamento, riferimento al capitolo di PEG, esercizi (in anni) di imputazione della spesa in ragione dell’esigibilità.</td></tr>
+                    <tr><td><strong>h) – l) Classificazione</strong></td><td>Livelli del <strong>Piano dei Conti finanziario (PdC) fino al quinto livello</strong>, natura ricorrente o non ricorrente della spesa, eventuale prenotazione precedente da trasformare in definitiva.</td></tr>
+                    <tr><td><strong>m) – n) Legittimità ed Entrata</strong></td><td>Attestazione di regolarità ex art. 147-bis TUEL; se finanziata da specifiche entrate, indicazione del capitolo di entrata e cronoprogramma finanziario (entrata) ed operativo (spesa).</td></tr>
+                  </tbody>
+                </table>
+              </div>
+              <p>Ai sensi della nota <strong>AREG/185294 del 21/02/2025</strong> e dell’art. 17 del D.Lgs. 36/2023, il provvedimento deve <strong>dimostrare come è sorta l’obbligazione giuridicamente vincolante</strong> con il terzo e attestare la conservazione digitale dei documenti ai sensi del CAD (D.Lgs. 82/2005, conservazione a cura di SISPI SpA).</p>
+              <div class="formula-box">
+                <div class="formula-box-head">
+                  <span class="formula-label">Formule — Perfezionamento obbligazione giuridica (ex art. 17 D.Lgs. 36/2023)</span>
+                  <button type="button" class="button--copy" onclick="copyFormula(this)">Copia formula</button>
+                </div>
+                <p class="formula-text" data-formula="Si attesta che in data [GG/MM/AAAA] è stato sottoscritto il contratto n. [___] (ovvero: l’obbligazione si è perfezionata mediante scambio di lettere commerciali n. [___] del [GG/MM/AAAA] / ricorrono le condizioni di cui al comma 8 o le ragioni d’urgenza di cui al comma 9 dell’art. 17 del D.Lgs. 36/2023 per l’esecuzione anticipata).">“Si attesta che in data [GG/MM/AAAA] è stato sottoscritto il contratto n. [___]” <em>ovvero</em> “Si attesta che l’obbligazione si è perfezionata mediante scambio di lettere commerciali n. [___] del [GG/MM/AAAA]” <em>ovvero</em> “Si attesta che ricorrono le condizioni di cui al comma 8 [o le ragioni d’urgenza di cui al comma 9] dell’art. 17 del D.Lgs. 36/2023 per l’esecuzione del contratto prima della sottoscrizione per [motivare].”</p>
+              </div>
+            `
+          },
+          {
+            id: 'cap3-2',
+            badge: '3.2',
+            title: `Compatibilità di Cassa (Art. 183 c. 8 TUEL), Riflessi Patrimoniali e PRFP`,
+            refs: [`Circ. AREG/671034 del 18/04/2024`, `Nota AREG/704477 del 03/05/2024`, `Nota AREG/932708 del 29/08/2023`],
+            html: `
+              <p>A pena di restituzione dell’atto, ogni determinazione di impegno deve contenere nella parte dispositiva l’attestazione di compatibilità monetaria e di cassa prevista dall’<strong>art. 183, comma 8, del TUEL</strong> (la cui violazione comporta responsabilità disciplinare e amministrativa):</p>
+              <div class="formula-box">
+                <div class="formula-box-head">
+                  <span class="formula-label">Formula — Compatibilità con stanziamento di cassa (Art. 183 c. 8 TUEL)</span>
+                  <button type="button" class="button--copy" onclick="copyFormula(this)">Copia formula</button>
+                </div>
+                <p class="formula-text" data-formula="Il sottoscritto dirigente, nella qualità di responsabile della spesa che con il presente atto si assume, attesta di avere accertato che il programma dei conseguenti pagamenti è compatibile con il relativo stanziamento di cassa e con le regole di finanza pubblica vigenti (ai sensi dell’art. 183, comma 8, del D.Lgs. 267/2000 e della Circolare della Ragioneria Generale prot. AREG/671034 del 18/04/2024).">“Il sottoscritto dirigente, nella qualità di responsabile della spesa che con il presente atto si assume, attesta di avere accertato che il programma dei conseguenti pagamenti è compatibile con il relativo stanziamento di cassa e con le regole di finanza pubblica vigenti.”</p>
+              </div>
+              <div class="inset inset--warning">
+                <p class="inset-title">Due avvertenze critiche della Ragioneria Generale (Giugno 2024)</p>
+                <ul>
+                  <li><strong>Progetti PNRR / PON / fondi extracomunali:</strong> NON va inserita l’attestazione che l’atto “non comporta alcun riflesso sulla situazione economico-finanziaria e/o patrimoniale”, poiché quanto realizzato incrementa il valore del patrimonio comunale (diverse determine PNRR PA Digitale sono state rigettate per questo motivo).</li>
+                  <li><strong>Art. 188, comma 1-quater, TUEL:</strong> da giugno 2024 l’attestazione che “si tratta di spesa prevista per legge” ex art. 188 c. 1-quater non va più inserita nelle DD di impegno, come comunicato con apposita nota dalla Ragioneria.</li>
+                </ul>
+              </div>
+              <p>Resta sempre obbligatoria l’attestazione relativa al <strong>PRFP</strong> (attuativa di misura PRFP senza aumento spesa corrente, oppure non in contrasto diretto/indiretto). Nel solo caso in cui l’impegno si ponga eccezionalmente in contrasto per adempimenti normativi cogenti, occorre dichiararlo espressamente descrivendo la necessità giuridica sottostante.</p>
+            `
+          },
+          {
+            id: 'cap3-3',
+            badge: '3.3',
+            title: `Conflitto di Interessi, Congruità Prezzi e Regolarità Contributiva`,
+            refs: [`Direttiva S.G. prot. 1616658 del 06/12/2023`, `Circ. S.G. 869237/2012 e 747138/2024`, `Nota AREG/334077 del 16/04/2026`, `Nota AREG/283220 del 19/03/2024`],
+            html: `
+              <h3>1. Insussistenza di conflitti di interesse</h3>
+              <p>In ottemperanza alla Direttiva del Segretario Generale prot. <strong>1616658 del 06/12/2023</strong> (richiamata anche dalla nota 6538/2024), l’attestazione di assenza di incompatibilità e conflitto di interessi va riportata <strong>sia nella relazione istruttoria/narrativa che nella parte dispositiva</strong> delle DD di impegno e liquidazione (nonché nelle richieste di anticipo/rimborso di spese economali ex art. 47 Reg. Cont., giusta nota AREG/283220 del 19/03/2024).</p>
+              <div class="formula-box">
+                <div class="formula-box-head">
+                  <span class="formula-label">Formula — Insussistenza conflitto di interessi (RUP / Dirigente)</span>
+                  <button type="button" class="button--copy" onclick="copyFormula(this)">Copia formula</button>
+                </div>
+                <p class="formula-text" data-formula="Il/La sottoscritto/a [Nome e Cognome] n.q. di [Dirigente responsabile / Responsabile del procedimento / RUP], dichiara di non trovarsi in situazioni di incompatibilità né in condizioni di conflitto di interessi, anche in via potenziale, rispetto all’oggetto e al contenuto del presente provvedimento, ai sensi della Direttiva del Segretario Generale prot. n. 1616658 del 06/12/2023.">“Il/La sottoscritto/a [Nome e Cognome] n.q. di [Dirigente responsabile / Responsabile del procedimento / RUP], dichiara di non trovarsi in situazioni di incompatibilità né in condizioni di conflitto di interessi, anche in via potenziale, rispetto all’oggetto e al contenuto del presente provvedimento, ai sensi della Direttiva del Segretario Generale prot. n. 1616658 del 06/12/2023.”</p>
+              </div>
+
+              <h3>2. Verifica ex ante della congruità della spesa e regolarità contributiva</h3>
+              <ul>
+                <li><strong>Congruità del prezzo:</strong> attestare che <em>“sono state effettuate le verifiche di cui alla circolare del Segretario Generale n. 869237 del 5.12.2012 e n. 747138 del 17.05.2024 che consentono di attestare che il prezzo è congruo”</em>.</li>
+                <li><strong>Imprese affidatarie:</strong> <em>“si attesta che i controlli sulla regolarità contributiva sono stati eseguiti con esito favorevole”</em> (DURC acquisito).</li>
+                <li><strong>Professionisti (Nota AREG/334077 del 16/04/2026):</strong> attestazione ai sensi del DPR 445/2000 di non avere dipendenti; inoltre, nei disciplinari d’incarico e nei contratti va inserita obbligatoriamente la clausola che obbliga il professionista a documentare la correntezza contributiva presso la propria Cassa previdenziale a ogni richiesta di pagamento e prevede la <strong>sospensione dei termini di pagamento</strong> in caso di mancata produzione o irregolarità.</li>
+              </ul>
+            `
+          },
+          {
+            id: 'cap3-4',
+            badge: '3.4',
+            title: `Affidamenti Diretti, Oggetto della DD, Società Partecipate e Quinto d’Obbligo`,
+            refs: [`Circ. AREG/176910 del 23/02/2026`, `Nota AREG/679702 del 05/05/2026`, `Circ. AREG/31115 del 12/01/2024`, `Art. 25 e 48 D.Lgs. 36/2023`],
+            html: `
+              <h3>Struttura obbligatoria dell’oggetto (Circ. AREG/176910 del 23/02/2026)</h3>
+              <p>In ogni determinazione dirigenziale di impegno è obbligatorio inserire nell’oggetto, <strong>prima della descrizione</strong>, la tipologia di affidamento scegliendo tra tre diciture tassative:</p>
+              <ul>
+                <li><strong>“Affidamento diretto”</strong> — per le procedure di cui all’art. 50 del D.Lgs. 36/2023;</li>
+                <li><strong>“Gara d’appalto”</strong> — per tutte le ulteriori procedure di scelta del contraente del D.Lgs. 36/2023;</li>
+                <li><strong>“Altro”</strong> — in tutti gli altri casi, ivi compreso l’<strong>affidamento in house</strong> (art. 7 D.Lgs. 36/2023).</li>
+              </ul>
+
+              <h3>Piattaforme digitali, interesse transfrontaliero e quinto d’obbligo</h3>
+              <ul>
+                <li><strong>Piattaforme (art. 25 D.Lgs. 36/2023):</strong> attestare che <em>“per la scelta del contraente si è fatto ricorso al MEPA o alla piattaforma Alice Appalti”</em>; in caso di assenza della categoria merceologica sul mercato elettronico, motivare specificamente (circ. AREG/1653475/2023 e AREG/165984/2024).</li>
+                <li><strong>Sotto-soglia (art. 48 c. 2 D.Lgs. 36/2023):</strong> attestare espressamente l’<strong>inesistenza di interesse transfrontaliero certo</strong>.</li>
+                <li><strong>Quinto d’obbligo negli affidamenti diretti (Nota AREG/679702 del 05/05/2026 — Parere MIT n. 4199/2026):</strong> la facoltà di variazione fino al 20% (art. 120, c. 9) è applicabile anche agli affidamenti diretti purché: a) l’importo massimo stimato (base + sesto quinto ex art. 14, c. 4) non superi mai la soglia di legge (€ 140.000 servizi/forniture; € 150.000 lavori); b) la clausola sia esplicitata sin dall’inizio nel quadro economico, nella determina di affidamento e nel contratto.</li>
+                <li><strong>Società partecipate (Circ. AREG/31115 del 12/01/2024):</strong> attestare il rispetto dei limiti dei corrispettivi (Del. C.C. 385/2020) e delle misure PRFP sia in narrativa sia nel dispositivo. <em>Eccezione:</em> per affidamenti in house finanziati con risorse extracomunali (PNRR/PON), tale attestazione non va resa perché trattasi di risorsa aggiuntiva rispetto al contratto di servizio ordinario.</li>
+              </ul>
+            `
+          },
+          {
+            id: 'cap3-5',
+            badge: '3.5',
+            title: `Esigibilità della Spesa a Fine Anno e Competenza Finanziaria Potenziata`,
+            refs: [`All. 4/2 D.Lgs. 118/2011 punto 5.2`, `Circ. AREG/1595219 del 14/11/2025`, `Email Rag. Gen. 10/12/2025`, `Nota AREG/13959 del 08/01/2026`],
+            html: `
+              <p>Ai sensi dell’Allegato 4/2 al D.Lgs. 118/2011, punto 5.2, l’impegno di spesa corrente per l’acquisto di beni e servizi deve essere imputato esclusivamente <strong>“nell’esercizio in cui risulta adempiuta completamente la prestazione da cui scaturisce l’obbligazione”</strong>.</p>
+              <p>Con circolare prot. <strong>AREG/1595219 del 14/11/2025</strong> e successiva direttiva del <strong>10/12/2025</strong>, il Ragioniere Generale ha disposto che è <strong>VIETATO</strong> imputare all’esercizio corrente impegni relativi a prestazioni o forniture che saranno rese nell’anno successivo, anche se il contratto o l’ordine sono sottoscritti prima del 31 dicembre. Le determinazioni trasmesse in chiusura di esercizio devono recare, a pena di restituzione, una specifica attestazione dirigenziale (la cui non veridicità comporta responsabilità amministrativa e contabile):</p>
+              <div class="formula-box">
+                <div class="formula-box-head">
+                  <span class="formula-label">Formula — Esigibilità della spesa corrente entro il 31 dicembre (Direttiva 10/12/2025)</span>
+                  <button type="button" class="button--copy" onclick="copyFormula(this)">Copia formula</button>
+                </div>
+                <p class="formula-text" data-formula="Il sottoscritto Dirigente attesta, ai fini del rispetto del principio della competenza finanziaria potenziata di cui all’All. 4/2 al D.Lgs. 118/2011, che l’obbligazione giuridica perfezionata con il presente atto diverrà esigibile entro il 31/12/2025, in quanto la prestazione/fornitura oggetto di impegno sarà completamente adempiuta dal contraente entro la medesima data, giusta clausola contrattuale/accordo tra le parti.">“Il sottoscritto Dirigente attesta, ai fini del rispetto del principio della competenza finanziaria potenziata di cui all’All. 4/2 al D.Lgs. 118/2011, che l’obbligazione giuridica perfezionata con il presente atto diverrà esigibile entro il 31/12/[AAAA], in quanto la prestazione/fornitura oggetto di impegno sarà completamente adempiuta dal contraente entro la medesima data, giusta clausola contrattuale/accordo tra le parti.”</p>
+              </div>
+              <p>Coerentemente, in sede di <strong>riaccertamento ordinario dei residui</strong> (nota <strong>AREG/13959 del 08/01/2026</strong>, art. 228 c. 3 TUEL), i residui passivi possono essere mantenuti solo se l’obbligazione è perfezionata e la prestazione è già stata resa nell’esercizio (fatture pervenute entro il 31/12 o relative a prestazioni rese nell’esercizio pervenute entro febbraio successivo); in caso contrario, gli impegni devono essere reimputati o liberati.</p>
+            `
+          }
+        ]
+      },
+      {
+        id: 'cap4',
+        num: '4',
+        shortTitle: 'Fondi Vincolati ed Extracomunali',
+        title: `Capitolo 4 — Spese Finanziate con Fondi Vincolati ed Extracomunali`,
+        subtitle: `Struttura dell’oggetto, obbligo del CUP, compatibilità con il vincolo di destinazione, ammissibilità a rendiconto, tempistiche di obbligazione e pagamento.`,
+        sections: [
+          {
+            id: 'cap4-1',
+            badge: '4.1',
+            title: `Formulazione Tassativa dell’Oggetto, Codice CUP e Allegati Obbligatori`,
+            refs: [`Nota AREG/977071 del 29/09/2022`, `Nota AREG/1034085 del 19/10/2022`, `Nota AREG/185294 del 21/02/2025`],
+            html: `
+              <p>Per garantire la piena tracciabilità e agevolare la rendicontazione degli interventi finanziati con risorse comunitarie, statali o regionali (PNRR, PON METRO, POC, Agenda Urbana, Patto per il Sud, mutui), l’<strong>oggetto</strong> delle determinazioni di impegno e di liquidazione deve seguire un ordine rigido di elementi:</p>
+              <div class="table-wrap">
+                <table class="doc-table">
+                  <thead>
+                    <tr>
+                      <th>Ordine</th>
+                      <th>Elemento obbligatorio nell’oggetto</th>
+                      <th>Esempio / Dettaglio operativo</th>
+                    </tr>
+                  </thead>
+                  <tbody>
+                    <tr><td><strong>1</strong></td><td>Fonte di finanziamento / Acronimo</td><td>Es. PNRR, PON METRO, PAC, POC Complementare, AGENDA URBANA, Mutuo Posizione n. …</td></tr>
+                    <tr><td><strong>2</strong></td><td>Codice assegnato nel programma</td><td>Es. PON METRO REACT_EU 2014/2020 - ASSE 6 - PA6.1.4.A</td></tr>
+                    <tr><td><strong>3</strong></td><td>Descrizione sintetica dell’intervento</td><td>Titolo dell’opera o progetto come da decreto di finanziamento</td></tr>
+                    <tr><td><strong>4</strong></td><td>Oggetto specifico della spesa</td><td>Es. Affidamento lavori / Liquidazione 1° SAL / Fornitura servizi</td></tr>
+                    <tr><td><strong>5</strong></td><td><strong>Codice Unico di Progetto (CUP)</strong></td><td>Obbligatorio: <strong>in assenza del CUP l’atto è nullo</strong>.</td></tr>
+                    <tr><td><strong>6–11</strong></td><td><em>Ulteriori dati in fase di liquidazione</em></td><td>SAL e certificato di pagamento; atto di sottomissione (se 1/5 d’obbligo); polizza fidejussoria ex circ. 938734/2024 (se anticipazione art. 125); voce esatta del QTE; n. accertamento e capitoli entrata; disciplinare/contratto/addendum allegati.</td></tr>
+                  </tbody>
+                </table>
+              </div>
+              <p>Devono sempre essere corredati all’atto i documenti fondativi: 1) Decreto di finanziamento vigente; 2) Decreto di impegno dell’Ente finanziatore; 3) Determinazioni dirigenziali dell’Organismo Intermedio (O.I.) di ammissione a finanziamento (es. PN METRO + / FUA). In caso di <strong>Mutuo</strong>, il dispositivo della liquidazione deve attestare l’avvenuta richiesta di somministrazione alla Cassa DD.PP. con indicazione del capitolo di entrata e numero/anno dell’accertamento.</p>
+            `
+          },
+          {
+            id: 'cap4-2',
+            badge: '4.2',
+            title: `Destinazione Vincolata, Ammissibilità a Rendiconto e Cofinanziamento`,
+            refs: [`Circ. AREG/1684748 del 10/12/2019`, `Circ. AREG/835883 del 25/07/2023`, `Nota AREG/185294 del 21/02/2025`],
+            html: `
+              <p>Con la nota <strong>AREG/185294 del 21/02/2025</strong> è stato richiamato l’obbligo di assicurare l’esatta corrispondenza tra l’entrata vincolata e la spesa finanziata (adeguando altresì la <strong>scheda ES3</strong> per le richieste di stanziamento e variazione di PEG/bilancio anche su quote di avanzo vincolato), al fine di evitare l’indebita destinazione di fondi.</p>
+              <div class="formula-box">
+                <div class="formula-box-head">
+                  <span class="formula-label">Formule — Compatibilità con il vincolo di destinazione e ammissibilità a rendiconto</span>
+                  <button type="button" class="button--copy" onclick="copyFormula(this)">Copia formula</button>
+                </div>
+                <p class="formula-text" data-formula="Il sottoscritto dirigente attesta che la spesa di cui al presente provvedimento è finanziata a valere sulla seguente entrata a destinazione vincolata [INSERIRE ATTO DI FINANZIAMENTO / DECRETO] ed è compatibile, in quanto prevista dalla legge e/o regolamento che la disciplina, con le finalità del vincolo di destinazione. Si attesta, altresì, che la spesa di cui al presente provvedimento è ammissibile a rendiconto, secondo le modalità e le indicazioni fornite dall’Ente finanziante.">“Il sottoscritto dirigente attesta che la spesa di cui al presente provvedimento è finanziata a valere sulla seguente entrata a destinazione vincolata <strong>[INSERIRE TIPOLOGIA DI ENTRATA / DECRETO DI FINANZIAMENTO]</strong> ed è compatibile, in quanto prevista dalla legge e/o regolamento che la disciplina, con le finalità del vincolo di destinazione. Si attesta, altresì, che la spesa di cui al presente provvedimento è ammissibile a rendiconto, secondo le modalità e le indicazioni fornite dall’Ente finanziante.”</p>
+              </div>
+              <p>Nelle determinazioni di liquidazione occorre inoltre attestare espressamente l’assenza (o la presenza dettagliata) di ulteriori quote di cofinanziamento a carico del bilancio comunale:</p>
+              <div class="formula-box">
+                <div class="formula-box-head">
+                  <span class="formula-label">Formula — Cofinanziamento a carico del bilancio comunale</span>
+                  <button type="button" class="button--copy" onclick="copyFormula(this)">Copia formula</button>
+                </div>
+                <p class="formula-text" data-formula="Si attesta che non sono previste altre forme di cofinanziamento a carico del bilancio comunale.">“Si attesta che non sono previste altre forme di cofinanziamento a carico del bilancio comunale” <em>ovvero</em> “Sono previste ulteriori fonti di finanziamento come di seguito dettagliate: [___].”</p>
+              </div>
+            `
+          },
+          {
+            id: 'cap4-3',
+            badge: '4.3',
+            title: `Rispetto delle Tempistiche di Obbligazione, Pagamento e Deroghe`,
+            refs: [`Circ. AREG/932708 del 29/08/2023`, `Circ. 828805 del 27/06/2019`, `Art. 32 c. 3 Reg. Cont.`],
+            html: `
+              <p>Il mancato rispetto dei cronoprogrammi stabiliti dall’Ente finanziatore può determinare la revoca o la riduzione del contributo, generando gravi squilibri di bilancio. Per questo motivo, la circolare <strong>AREG/932708 del 29/08/2023</strong> e la scheda <strong>AREG/185294 del 21/02/2025</strong> impongono di attestare:</p>
+              <ul>
+                <li><strong>In fase di impegno (e liquidazione):</strong> <em>“Si dà atto che il termine di scadenza fissato per l’assunzione della obbligazione giuridicamente vincolante è il [GG/MM/AAAA] [ed è stato rispettato].”</em></li>
+                <li><strong>In fase di pagamento/liquidazione:</strong> <em>“Si dà atto che il termine ultimo per eseguire i pagamenti è il [GG/MM/AAAA].”</em></li>
+                <li><strong>Urgenza e deroga all’ordine cronologico:</strong> ai sensi dell’art. 32, comma 3, del Regolamento di Contabilità (e circ. 828805/2019), per i pagamenti su programmi comunitari è possibile richiedere la <strong>deroga all’ordine cronologico</strong>, attestando l’urgenza prioritaria di ordinazione in considerazione delle esigenze di rendicontazione periodica e della necessità di utilizzare le somme accreditate entro l’anno.</li>
+              </ul>
+              <div class="diagram-card">
+                <svg class="diagram-svg" viewBox="0 0 820 175" role="img" aria-label="Flusso temporale dei fondi extracomunali: dal decreto di finanziamento e scheda ES3 alla scadenza OGV, esecuzione e pagamento con deroga cronologica">
+                  <line x1="55" y1="70" x2="765" y2="70" stroke="var(--primary)" stroke-width="4"></line>
+                  <circle cx="70" cy="70" r="14" fill="var(--primary)"></circle>
+                  <text x="70" y="75" text-anchor="middle" fill="var(--on-primary)" font-size="12" font-weight="800">1</text>
+                  <text x="70" y="106" text-anchor="middle" fill="var(--on-surface)" font-size="12" font-weight="700">Decreto &amp; Scheda ES3</text>
+                  <text x="70" y="124" text-anchor="middle" fill="var(--on-surface-variant)" font-size="11">Iscrizione in bilancio</text>
+                  <text x="70" y="139" text-anchor="middle" fill="var(--on-surface-variant)" font-size="11">CUP obbligatorio</text>
+
+                  <circle cx="290" cy="70" r="14" fill="var(--tertiary)"></circle>
+                  <text x="290" y="75" text-anchor="middle" fill="var(--on-primary)" font-size="12" font-weight="800">2</text>
+                  <text x="290" y="106" text-anchor="middle" fill="var(--on-surface)" font-size="12" font-weight="700">Termine OGV</text>
+                  <text x="290" y="124" text-anchor="middle" fill="var(--on-surface-variant)" font-size="11">Obbligazione giuridica</text>
+                  <text x="290" y="139" text-anchor="middle" fill="var(--on-surface-variant)" font-size="11">vincolante entro scadenza</text>
+
+                  <circle cx="515" cy="70" r="14" fill="var(--data-2)"></circle>
+                  <text x="515" y="75" text-anchor="middle" fill="var(--on-primary)" font-size="12" font-weight="800">3</text>
+                  <text x="515" y="106" text-anchor="middle" fill="var(--on-surface)" font-size="12" font-weight="700">Liquidazione &amp; Deroga</text>
+                  <text x="515" y="124" text-anchor="middle" fill="var(--on-surface-variant)" font-size="11">Art. 32 c. 3 Reg. Cont.</text>
+                  <text x="515" y="139" text-anchor="middle" fill="var(--on-surface-variant)" font-size="11">Esclusa compens. UE</text>
+
+                  <circle cx="740" cy="70" r="14" fill="var(--positive)"></circle>
+                  <text x="740" y="75" text-anchor="middle" fill="var(--on-primary)" font-size="12" font-weight="800">4</text>
+                  <text x="740" y="106" text-anchor="middle" fill="var(--on-surface)" font-size="12" font-weight="700">Termine Pagamenti</text>
+                  <text x="740" y="124" text-anchor="middle" fill="var(--on-surface-variant)" font-size="11">Ammissibilità spesa</text>
+                  <text x="740" y="139" text-anchor="middle" fill="var(--on-surface-variant)" font-size="11">e rendicontazione</text>
+                </svg>
+                <p class="diagram-caption">Figura 4.1 — Presidi temporali e contabili lungo il ciclo di vita degli interventi finanziati con fondi extracomunali.</p>
+              </div>
+            `
+          }
+        ]
+      },
+      {
+        id: 'cap5',
+        num: '5',
+        shortTitle: 'Determinazioni di Liquidazione',
+        title: `Capitolo 5 — Attestazioni nelle Determinazioni di Liquidazione`,
+        subtitle: `Conformità e congruità ex art. 31, cause ostative, procedura anti-phishing IBAN, tempi di pagamento, compensazioni GESEPA, art. 48-bis DPR 602/73, DURC e imposta di bollo.`,
+        sections: [
+          {
+            id: 'cap5-1',
+            badge: '5.1',
+            title: `Conformità al Contratto, Congruità Prezzi (Art. 31) e Residui Pregressi`,
+            refs: [`Art. 31 Reg. Contabilità`, `Direttiva S.G. AREG/747138 del 17/05/2024`, `Circ. S.G. 869237 del 05/12/2012`],
+            html: `
+              <p>Nella parte dispositiva della determinazione di liquidazione, il dirigente certifica la liquidabilità della spesa ai sensi dell’<strong>art. 31, commi 2, 5 e 6, del Regolamento di Contabilità</strong>. La Direttiva del Segretario Generale n. <strong>AREG/747138 del 17/05/2024</strong> ha imposto un <strong>onere motivazionale rafforzato</strong>: l’attestazione di congruità e regolare esecuzione deve consentire di ricostruire l’iter logico della valutazione di convenienza economica mediante comparazione con i <strong>prezzari regionali</strong> o mediante <strong>indagini di mercato</strong>, evidenziando la rispondenza alle finalità istituzionali dell’Ente.</p>
+              <div class="formula-box">
+                <div class="formula-box-head">
+                  <span class="formula-label">Formula — Art. 31 Reg. Contabilità e congruità ex ante</span>
+                  <button type="button" class="button--copy" onclick="copyFormula(this)">Copia formula</button>
+                </div>
+                <p class="formula-text" data-formula="Ai sensi dell’art. 31 del Regolamento di contabilità, si attesta l’avvenuta positiva verifica di tutti gli aspetti indicati al comma 2, la conformità della spesa al contratto e la congruità dei prezzi quale assunzione di responsabilità in ordine alla liquidabilità della spesa, siccome disposto al comma 6, nonché l’effettuazione delle verifiche di cui alle circolari del Segretario Generale n. 869237 del 05/12/2012 e n. 747138 del 17/05/2024.">“Ai sensi dell’art. 31 del Regolamento di contabilità, si attesta l’avvenuta positiva verifica di tutti gli aspetti indicati al comma 2, la conformità della spesa al contratto e la congruità dei prezzi quale assunzione di responsabilità in ordine alla liquidabilità della spesa, siccome disposto al comma 6, nonché l’effettuazione delle verifiche di cui alle circolari del Segretario Generale n. 869237 del 05/12/2012 e n. 747138 del 17/05/2024.”</p>
+              </div>
+              <ul>
+                <li><strong>Controllo amministrativo-contabile e CAD:</strong> attestare che la documentazione giustificativa resta conservata digitalmente agli atti dell’ufficio ai sensi del D.Lgs. 82/2005.</li>
+                <li><strong>Imputazione a impegni di anni precedenti:</strong> attestare espressamente che <em>“la prestazione è stata resa nell’anno dell’impegno”</em> (verificando la congruenza di fattura, SAL o ordinativo).</li>
+                <li><strong>Conflitto di interessi e Art. 147-bis TUEL:</strong> ribadire le formule già illustrate ai paragrafi 1.2 e 3.3 (nel testo dispositivo e in narrativa).</li>
+                <li><strong>Art. 163 c. 3 TUEL:</strong> solo in caso di bilancio dell’anno corrente non ancora approvato dal Consiglio Comunale, attestare che la spesa rientra tra quelle di somma urgenza / obbligatorie consentite in esercizio provvisorio.</li>
+              </ul>
+            `
+          },
+          {
+            id: 'cap5-2',
+            badge: '5.2',
+            title: `Assenza Cause Ostative, Tracciabilità L. 136/2010 e Contrasto alle Frodi IBAN`,
+            refs: [`Circ. 539641 del 29/03/2019`, `Nota 338379 del 09/04/2025 (ANAC)`, `Note AREG/276833 e 323751/2026`, `Circ. S.G. AREG/802891 del 15/06/2026`],
+            html: `
+              <h3>1. Cause ostative al pagamento e tracciabilità dei flussi finanziari</h3>
+              <div class="formula-box">
+                <div class="formula-box-head">
+                  <span class="formula-label">Formula — Assenza cessioni, pignoramenti e procedure concorsuali</span>
+                  <button type="button" class="button--copy" onclick="copyFormula(this)">Copia formula</button>
+                </div>
+                <p class="formula-text" data-formula="Si attesta che a carico del creditore non risultano atti di cessione, pignoramenti, procedure esecutive, sequestri, fallimenti e procedure concorsuali, atti conservativi comunque denominati sulle somme oggetto dei pagamenti (giusta Circolare della Ragioneria Generale n. 539641 del 29/03/2019).">“Si attesta che a carico del creditore non risultano atti di cessione, pignoramenti, procedure esecutive, sequestri, fallimenti e procedure concorsuali, atti conservativi comunque denominati sulle somme oggetto dei pagamenti.”</p>
+              </div>
+              <p>Per la <strong>tracciabilità dei flussi finanziari</strong> (art. 3 L. 136/2010 e Comunicato del Presidente ANAC del 26/03/2025 trasmesso con nota prot. <strong>338379 del 09/04/2025</strong>), occorre attestare l’acquisizione del conto corrente dedicato e dell’elenco dei soggetti delegati (non applicabile alle liquidazioni verso società interamente partecipate dal Comune), nonché l’indicazione di CIG e CUP su tutte le transazioni e il controllo lungo la filiera dei subappalti.</p>
+
+              <h3>2. Procedura rafforzata anti-phishing su modifica conti correnti (“Frode IBAN”)</h3>
+              <div class="inset inset--error">
+                <p class="inset-title">Protocollo vincolante per variazione coordinate bancarie (Circ. S.G. AREG/802891 del 15/06/2026)</p>
+                <p>A seguito di tentativi di truffa informatica sventati dall’Ufficio Interventi Finanziari (note AREG/276833 del 25/03/2026 e AREG/323751 del 13/04/2026), nessuna variazione IBAN può essere recepita tramite semplice e-mail o PEC ordinaria. Con decorrenza immediata e <strong>per qualsiasi importo</strong> sono obbligatori i seguenti presidi:</p>
+                <ol>
+                  <li><strong>Nuova dichiarazione ex art. 3 c. 7 L. 136/2010</strong> sottoscritta con firma digitale dal legale rappresentante e trasmessa dal domicilio digitale risultante da <strong>INI-PEC / Registro Imprese</strong>; verifica della validità della firma digitale e del potere di rappresentanza tramite visura camerale.</li>
+                  <li><strong>Call-back su canale diverso:</strong> contatto diretto con un referente già noto utilizzando esclusivamente i recapiti storici del contratto o dell’anagrafica preesistente (mai quelli contenuti nella richiesta di variazione).</li>
+                  <li><strong>Verification of Payee:</strong> prima del primo pagamento sul nuovo IBAN, acquisizione tramite Ragioneria Generale e Banca Tesoriera del riscontro di corrispondenza tra IBAN e intestatario.</li>
+                  <li><strong>Segregazione e check-list:</strong> inserimento anagrafico da parte dell’istruttore, validazione da soggetto distinto, allegazione della check-list alla liquidazione. La Ragioneria blocca i mandati riferiti a IBAN variati nei 60 giorni precedenti privi di tale attestazione.</li>
+                  <li><strong>Sospetto di frode:</strong> blocco immediato dei pagamenti, richiesta richiamo bonifico, conservazione integra dei file originali con header, denuncia ex art. 331 c.p.p. (anche per il solo tentativo) e informativa al RPCT.</li>
+                </ol>
+              </div>
+            `
+          },
+          {
+            id: 'cap5-3',
+            badge: '5.3',
+            title: `Tempi di Pagamento, Compensazioni GESEPA e Verifiche Art. 48-bis DPR 602/73`,
+            refs: [`Nota AREG/793652 del 09/06/2025`, `Circ. AREG/333869 del 09/04/2024`, `L. 199/2025 c. 725 e L. 88/2026`, `Note AREG/33695 e 751429/2026`],
+            html: `
+              <h3>1. Rispetto dei termini di pagamento e Piattaforma Crediti Commerciali (PCC)</h3>
+              <p>Ogni liquidazione deve recare la formula <em>“Si attesta il rispetto dei termini di pagamento — scadenza fattura: [GG/MM/AAAA]”</em> (nota <strong>AREG/793652 del 09/06/2025</strong>) oppure motivare puntualmente le cause dell’eventuale ritardo. Secondo le circolari <strong>AREG/333869/2024</strong> e <strong>MEF n. 15/2024</strong>, non è consentito sospendere le fatture su PCC per attesa trasferimenti statali o per ritardo nel rilascio del DURC; il mancato rispetto dell’indicatore annuale dei tempi di pagamento incide sull’obiettivo dirigenziale comportando la decurtazione fino al 30% della retribuzione di risultato.</p>
+
+              <h3>2. Compensazioni legali presso GESEPA (Soglia ≥ € 300,00)</h3>
+              <p>Per importi <strong>a partire da € 300,00</strong> è obbligatorio attestare l’esecuzione delle verifiche presso <strong>GESEPA</strong> (sezione Pratiche Compensazione) ai sensi dell’art. 1243 c.c., allegando l’esito del controllo e, in caso positivo, i dati per la trattenuta. <em>Eccezione:</em> per pagamenti a valere su <strong>risorse comunitarie</strong> va attestata l’esclusione dell’applicabilità della compensazione legale (circ. 1439542 del 16/10/2019).</p>
+
+              <h3>3. Verifiche fiscali ex art. 48-bis DPR 602/73 e novità dal 15 giugno 2026</h3>
+              <div class="inset inset--positive">
+                <p class="inset-title">Disciplina aggiornata art. 48-bis comma 1-ter per i Professionisti (Dal 15/06/2026)</p>
+                <p>Per effetto del comma 725 della Legge di Bilancio 2026 (L. 199/2025) e dell’art. 2-ter del D.L. 38/2026 (conv. in L. 88/2026), illustrati nelle note Ragioneria <strong>AREG/33695 del 14/01/2026</strong> e <strong>AREG/751429 del 27/05/2026</strong>:</p>
+                <ul>
+                  <li><strong>Imprese e altri soggetti (non art. 54 TUIR):</strong> verifica obbligatoria solo per pagamenti <strong>superiori a € 5.000,00</strong> (al netto di IVA), allegando l’attestazione PDF di esito negativo.</li>
+                  <li><strong>Esercenti arti e professioni (redditi ex art. 54 TUIR, inclusi forfettari e patrocinio a spese dello Stato):</strong> dal <strong>15 giugno 2026</strong> è stata abolita la soglia minima per il controllo: la verifica telematica va eseguita per <strong>qualunque importo</strong> (anche ≤ € 5.000), per tutti i pagamenti disposti da tale data (anche per fatture pregresse).</li>
+                  <li><strong>Soglia del debito a ruolo (€ 5.000):</strong> se dalla verifica sul professionista emergono cartelle notificate per un ammontare complessivo <strong>almeno pari a € 5.000</strong>, l’Ente paga direttamente all’Agente della Riscossione fino a concorrenza del debito e versa al beneficiario solo l’eventuale eccedenza. Se il debito è inferiore a € 5.000, il pagamento avviene regolarmente.</li>
+                </ul>
+              </div>
+            `
+          },
+          {
+            id: 'cap5-4',
+            badge: '5.4',
+            title: `DURC, Professionisti, Imposta di Bollo e Verifiche per Soglia di Importo`,
+            refs: [`Art. 31 c. 4 D.L. 69/2013`, `Circ. AREG/53547 del 16/01/2026`, `Nota AREG/334077 del 16/04/2026`, `Circ. AREG/938734 del 22/07/2024`],
+            html: `
+              <ul>
+                <li><strong>DURC (Imprese):</strong> attestare l’esito favorevole mediante DURC in corso di validità allegato; in caso di DURC irregolare, attivare l’intervento sostitutivo trattenendo l’importo dell’inadempienza per il versamento agli Enti previdenziali.</li>
+                <li><strong>Professionisti:</strong> allegare autodichiarazione ex DPR 445/2000 di non avere dipendenti e attestare la regolare iscrizione e correntezza presso la Cassa previdenziale di appartenenza (applicando la sospensione contrattuale in caso di mancata produzione ex nota AREG/334077/2026). Per prestazioni occasionali, prevedere la contribuzione INPS Gestione Separata (F24 a cura dell’Ente).</li>
+                <li><strong>Imposta di bollo sulle fatture elettroniche (Circ. AREG/53547 del 16/01/2026):</strong> per operazioni esenti, non imponibili o fuori campo IVA (es. regime forfettario) di importo superiore a <strong>€ 77,47</strong>, verificare il regolare assolvimento del bollo di <strong>€ 2,00</strong>.</li>
+                <li><strong>Anticipazione ex art. 125 D.Lgs. 36/2023:</strong> allegare la polizza fidejussoria e attestare l’esito delle verifiche previste dalla circolare AREG/938734 del 22/07/2024.</li>
+              </ul>
+
+              <div class="diagram-card">
+                <svg class="diagram-svg" viewBox="0 0 820 190" role="img" aria-label="Scala delle soglie di controllo nelle determinazioni di liquidazione: 77,47 euro imposta di bollo, 300 euro compensazione GESEPA, 5.000 euro art. 48-bis DPR 602/73">
+                  <rect x="20" y="30" width="240" height="130" fill="var(--background)" stroke="var(--primary)" stroke-width="2"></rect>
+                  <rect x="20" y="30" width="240" height="32" fill="var(--primary)"></rect>
+                  <text x="32" y="51" fill="var(--on-primary)" font-size="13" font-weight="800">&gt; € 77,47 (Fatture esenti / IVA 0)</text>
+                  <text x="32" y="85" fill="var(--on-surface)" font-size="12.5" font-weight="700">Imposta di Bollo € 2,00</text>
+                  <text x="32" y="106" fill="var(--on-surface-variant)" font-size="11.5">Verifica su fattura elettronica</text>
+                  <text x="32" y="124" fill="var(--on-surface-variant)" font-size="11.5">Compresa nell’attestazione</text>
+                  <text x="32" y="142" fill="var(--tertiary)" font-size="11.5" font-weight="700">Art. 147-bis (Circ. 53547/2026)</text>
+
+                  <rect x="290" y="30" width="240" height="130" fill="var(--background)" stroke="var(--data-2)" stroke-width="2"></rect>
+                  <rect x="290" y="30" width="240" height="32" fill="var(--data-2)"></rect>
+                  <text x="302" y="51" fill="var(--on-primary)" font-size="13" font-weight="800">≥ € 300,00 (Ordinario)</text>
+                  <text x="302" y="85" fill="var(--on-surface)" font-size="12.5" font-weight="700">Compensazione GESEPA</text>
+                  <text x="302" y="106" fill="var(--on-surface-variant)" font-size="11.5">Verifica art. 1243 c.c. + allegato</text>
+                  <text x="302" y="124" fill="var(--on-surface-variant)" font-size="11.5">Se esito positivo: trattenuta</text>
+                  <text x="302" y="142" fill="var(--error)" font-size="11.5" font-weight="700">Esclusa su risorse UE (1439542/19)</text>
+
+                  <rect x="560" y="30" width="240" height="130" fill="var(--background)" stroke="var(--positive)" stroke-width="2"></rect>
+                  <rect x="560" y="30" width="240" height="32" fill="var(--positive)"></rect>
+                  <text x="572" y="51" fill="var(--on-primary)" font-size="13" font-weight="800">Art. 48-bis DPR 602/73</text>
+                  <text x="572" y="85" fill="var(--on-surface)" font-size="12" font-weight="700">Imprese: soglia &gt; € 5.000 (imp.)</text>
+                  <text x="572" y="106" fill="var(--positive)" font-size="12" font-weight="800">Professionisti: QUALSIASI importo</text>
+                  <text x="572" y="124" fill="var(--on-surface-variant)" font-size="11.5">Dal 15/06/2026 (L. 199/2025)</text>
+                  <text x="572" y="142" fill="var(--on-surface-variant)" font-size="11.5">Blocco se debito ≥ € 5.000</text>
+                </svg>
+                <p class="diagram-caption">Figura 5.1 — Quadro sinottico delle soglie di controllo obbligatorie nei provvedimenti di liquidazione.</p>
+              </div>
+
+              <div class="tool-panel" aria-labelledby="liq-tool-title">
+                <h3 id="liq-tool-title">Verificatore operativo delle attestazioni di liquidazione</h3>
+                <div class="tool-controls-grid">
+                  <div class="field-group">
+                    <label for="liq-subject" class="field-label">Tipologia di beneficiario</label>
+                    <select id="liq-subject" class="field-select" onchange="updateLiqChecker()">
+                      <option value="impresa">Impresa / Società commerciale</option>
+                      <option value="professionista">Professionista (Art. 54 TUIR)</option>
+                      <option value="partecipata">Società interamente partecipata</option>
+                    </select>
+                  </div>
+                  <div class="field-group">
+                    <label for="liq-amount" class="field-label">Importo da liquidare (imponibile €)</label>
+                    <input id="liq-amount" class="field-input" type="number" min="0" step="10" value="4200" oninput="updateLiqChecker()">
+                  </div>
+                  <div class="field-group">
+                    <label for="liq-funding" class="field-label">Fonte di finanziamento</label>
+                    <select id="liq-funding" class="field-select" onchange="updateLiqChecker()">
+                      <option value="comunale">Risorse proprie comunali</option>
+                      <option value="ue">Fondi comunitari / UE</option>
+                    </select>
+                  </div>
+                  <div class="field-group">
+                    <label for="liq-iva" class="field-label">Regime IVA fattura</label>
+                    <select id="liq-iva" class="field-select" onchange="updateLiqChecker()">
+                      <option value="ordinaria">Soggetta ad IVA ordinaria</option>
+                      <option value="esente">Esente / Non imponibile / Forfettario</option>
+                    </select>
+                  </div>
+                </div>
+                <div id="liq-checker-output" class="inset" aria-live="polite"></div>
+              </div>
+            `
+          }
+        ]
+      },
+      {
+        id: 'cap6',
+        num: '6',
+        shortTitle: 'Autovalutazione (Quiz)',
+        title: `Capitolo 6 — Autovalutazione Operativa`,
+        subtitle: `Verifica la tua preparazione sulle attestazioni contabili, sulle soglie normative aggiornate al 2026 e sulle formule richieste dalla Ragioneria Generale.`,
+        sections: [
+          {
+            id: 'cap6-1',
+            badge: '6.1',
+            title: `Test a Risposta Multipla con Feedback Immediato`,
+            refs: [`12 quesiti operativi`, `Aggiornato alle circolari 2024–2026`],
+            html: `<div id="quiz-mount"></div>`
+          }
+        ]
+      }
+    ];
+
+    const QUIZ_QUESTIONS = [
+      {
+        id: 'q1',
+        question: `In una proposta di deliberazione di Giunta Comunale che non produce effetti finanziari né patrimoniali, quale formula è ammessa dalla Ragioneria Generale?`,
+        options: [
+          `“Il presente provvedimento non comporta oneri a carico del bilancio comunale.”`,
+          `“Il presente atto non comporta alcun riflesso sulla situazione economico-finanziaria e/o patrimoniale dell’Ente, né nell’esercizio finanziario in corso, né in quelli successivi.”`,
+          `“I riflessi finanziari sono desumibili dalla relazione tecnica allegata.”`,
+          `Non occorre alcuna attestazione se la proposta non contiene impegni di spesa.`
+        ],
+        correct: 1,
+        explanation: `Le note prot. AREG/927414/2022, AREG/165984/2024 e AREG/185294/2025 vietano formule generiche o rinvii agli allegati, imponendo la formula tassativa sull’assenza di riflessi nell’esercizio in corso e nei successivi.`
+      },
+      {
+        id: 'q2',
+        question: `In quale formato deve essere allegato un Quadro Tecnico Economico (QTE) approvato o modificato in una delibera o determina sottoposta al vaglio della Ragioneria (nota AREG/774062 del 28/05/2024)?`,
+        options: [
+          `Esclusivamente in formato PDF/A firmato digitalmente.`,
+          `In formato Word editabile.`,
+          `In formato Excel tra gli allegati all’atto.`,
+          `È sufficiente trascrivere le somme nel dispositivo senza allegare il file.`
+        ],
+        correct: 2,
+        explanation: `La nota Ragioneria prot. AREG/774062 del 28/05/2024 prescrive che il QTE venga inserito in formato Excel tra gli allegati all’atto per velocizzare l’istruttoria di impegni e liquidazioni.`
+      },
+      {
+        id: 'q3',
+        question: `Nel caso di una determinazione di impegno relativa a un progetto PNRR / PON finanziato con fondi extracomunali, quale errore ha causato il rigetto di atti da parte della Ragioneria a fine giugno 2024?`,
+        options: [
+          `Aver inserito il codice CUP nell’oggetto.`,
+          `Aver attestato che l’atto “non comporta alcun riflesso sulla situazione economico-finanziaria e/o patrimoniale dell’Ente”.`,
+          `Aver allegato il decreto di finanziamento dell’Ente erogatore.`,
+          `Aver indicato la compatibilità con gli stanziamenti di cassa.`
+        ],
+        correct: 1,
+        explanation: `I progetti PNRR/PON incrementano il valore del patrimonio comunale; pertanto non bisogna attestare l’assenza di riflessi economico-patrimoniali.`
+      },
+      {
+        id: 'q4',
+        question: `Cosa dispone la circolare AREG/176910 del 23/02/2026 in merito all’oggetto delle determinazioni dirigenziali di impegno?`,
+        options: [
+          `Deve riportare prima della descrizione il tipo di affidamento (“affidamento diretto”, “gara d’appalto” o “altro”, incluso l’in house).`,
+          `Deve riportare solo il numero di CIG e la data della determina a contrarre.`,
+          `Deve iniziare sempre con il nome della società affidataria.`,
+          `Si applica soltanto agli affidamenti sopra soglia comunitaria.`
+        ],
+        correct: 0,
+        explanation: `La circolare AREG/176910 del 23/02/2026 impone di indicare prima della descrizione dell’oggetto: “affidamento diretto” (art. 50), “gara d’appalto” (altre procedure del D.Lgs. 36/2023) o “altro” (es. in house ex art. 7).`
+      },
+      {
+        id: 'q5',
+        question: `Secondo il parere MIT n. 4199/2026 (nota AREG/679702 del 05/05/2026), quando è legittimo applicare il “quinto d’obbligo” in un affidamento diretto di servizi?`,
+        options: [
+          `Sempre, anche se l’importo finale supera i 140.000 €, trattandosi di variazione successiva.`,
+          `Solo se la facoltà è prevista sin dall’inizio nel QTE, nella determina e nel contratto, e l’importo totale comprensivo del quinto non supera € 140.000.`,
+          `Solo previa autorizzazione del Consiglio Comunale.`,
+          `Il quinto d’obbligo è vietato negli affidamenti diretti.`
+        ],
+        correct: 1,
+        explanation: `L’importo massimo stimato (base + sesto quinto ex art. 14 c. 4) non deve mai superare le soglie dell’art. 50 (€ 140.000 per servizi/forniture, € 150.000 per lavori) e la clausola deve figurare ab origine negli atti.`
+      },
+      {
+        id: 'q6',
+        question: `In base all’All. 4/2 al D.Lgs. 118/2011 (punto 5.2) e alla direttiva del Ragioniere Generale del 10/12/2025, come va imputato l’impegno di spesa corrente per beni e servizi a fine anno?`,
+        options: [
+          `Nell’anno in cui viene firmato l’ordine, anche se la fornitura sarà consegnata a febbraio dell’anno dopo.`,
+          `Nell’esercizio in cui la prestazione risulta completamente adempiuta dal contraente (entro il 31 dicembre, con specifica attestazione).`,
+          `Può essere imputato indistintamente all’anno corrente o successivo a discrezione del RUP.`,
+          `Va sempre trasformato in fondo rischi potenziali.`
+        ],
+        correct: 1,
+        explanation: `Il principio della competenza finanziaria potenziata vieta di imputare all’esercizio corrente spese correnti per prestazioni rese nell’esercizio successivo.`
+      },
+      {
+        id: 'q7',
+        question: `Quale conseguenza comporta l’omessa indicazione del codice CUP in un provvedimento di spesa finanziato con risorse vincolate/extracomunali?`,
+        options: [
+          `Una semplice irregolarità sanabile in sede di mandato.`,
+          `La nullità dell’atto.`,
+          `L’applicazione automatica della compensazione legale.`,
+          `Nessuna conseguenza se è presente il CIG.`
+        ],
+        correct: 1,
+        explanation: `Le schede operative della Ragioneria (nota AREG/185294/2025) evidenziano che il CUP va inserito nell’oggetto e che in assenza del CUP l’atto è nullo.`
+      },
+      {
+        id: 'q8',
+        question: `Dove deve essere inserita la dichiarazione di insussistenza di incompatibilità e conflitto di interessi (Direttiva S.G. prot. 1616658/2023)?`,
+        options: [
+          `Solo nella relazione istruttoria.`,
+          `Solo nel dispositivo della determinazione.`,
+          `Sia nella parte narrativa/relazione sia nella parte dispositiva (nonché nelle richieste di anticipo/rimborso economale).`,
+          `Esclusivamente negli affidamenti superiori a 40.000 euro.`
+        ],
+        correct: 2,
+        explanation: `La dichiarazione va resa dal RUP/Dirigente sia nella relazione/narrativa che nella parte dispositiva delle DD di impegno e liquidazione, e integra anche le note per spese economali (AREG/283220/2024).`
+      },
+      {
+        id: 'q9',
+        question: `Dal 15 giugno 2026 (L. 199/2025 c. 725 e note AREG/33695 e 751429/2026), come si applica la verifica fiscale ex art. 48-bis DPR 602/73 ai pagamenti in favore di professionisti (art. 54 TUIR)?`,
+        options: [
+          `Si applica solo oltre € 5.000, esattamente come per le società di capitali.`,
+          `La verifica va eseguita per qualsiasi importo (anche fino a € 5.000); se emergono cartelle non pagate pari almeno a € 5.000, la PA paga direttamente all’Agente della Riscossione fino a concorrenza del debito.`,
+          `È stata soppressa per i professionisti in regime forfettario.`,
+          `Si applica solo se il professionista ha dipendenti.`
+        ],
+        correct: 1,
+        explanation: `Il comma 1-ter dell’art. 48-bis elimina dal 15/06/2026 la soglia minima per l’avvio della verifica sui redditi ex art. 54 TUIR, mantenendo la soglia di € 5.000 del debito accertato per far scattare il pagamento sostitutivo.`
+      },
+      {
+        id: 'q10',
+        question: `Qual è la soglia di importo a partire dalla quale nella determinazione di liquidazione va attestata la verifica presso GESEPA sulle compensazioni legali (art. 1243 c.c.)?`,
+        options: [
+          `A partire da € 300,00 (salvo risorse comunitarie, dove la compensazione legale è esclusa).`,
+          `Solo oltre € 5.000,00.`,
+          `A partire da € 77,47.`,
+          `Solo per le imprese edili.`
+        ],
+        correct: 0,
+        explanation: `Per importi ≥ € 300,00 occorre attestare la verifica presso GESEPA e allegarne l’esito; sui pagamenti finanziati con risorse comunitarie va invece attestata l’esclusione della compensazione legale (circ. 1439542/2019).`
+      },
+      {
+        id: 'q11',
+        question: `Secondo la Circolare S.G. AREG/802891 del 15/06/2026 contro le frodi IBAN, cosa è necessario fare prima di pagare su un nuovo conto corrente comunicato dall’operatore economico?`,
+        options: [
+          `È sufficiente una PEC inviata dall’indirizzo abituale del fornitore.`,
+          `Basta allegare la fattura con il nuovo IBAN.`,
+          `Acquisire nuova dichiarazione di conto dedicato firmata digitalmente da domicilio INI-PEC, effettuare call-back su recapiti storici, acquisire Verification of Payee tramite Ragioneria/Tesoriere e allegare la check-list validata.`,
+          `Attendere 30 giorni dalla ricezione dell’e-mail ordinaria.`
+        ],
+        correct: 2,
+        explanation: `La procedura anti-phishing vieta di recepire variazioni IBAN via e-mail o sola PEC e impone la verifica della firma digitale/INI-PEC, il call-back su canale diverso, il controllo Verification of Payee e la segregazione istruttore/validatore.`
+      },
+      {
+        id: 'q12',
+        question: `In base alla circolare AREG/53547 del 16/01/2026, quando il dirigente deve verificare l’assolvimento dell’imposta di bollo di € 2,00 sulle fatture elettroniche liquidate?`,
+        options: [
+          `Su tutte le fatture elettroniche soggette ad IVA ordinaria.`,
+          `Sulle fatture emesse per operazioni esenti, non imponibili o fuori campo IVA di importo superiore a € 77,47.`,
+          `Solo sulle fatture superiori a € 5.000.`,
+          `Solo per le società in house.`
+        ],
+        correct: 1,
+        explanation: `L’imposta di bollo da € 2,00 è dovuta sulle fatture elettroniche per operazioni esenti, non imponibili o fuori campo IVA (come il regime forfettario) qualora l’importo superi € 77,47.`
+      }
+    ];
+
+    /* Total trackable paragraphs across chapters 1..6 */
+    const ALL_SECTIONS = PAGES.reduce(function(acc, p) {
+      return acc.concat(p.sections.map(function(s) { return s.id; }));
+    }, []);
+
+    let appState = {
+      currentPage: 'home',
+      readSections: {},
+      quizAnswers: {},
+      quizResetArmed: false
+    };
+
+    let lastFocusedElement = null;
+    let tocObserver = null;
+
+    function getAllSectionMeta() {
+      const list = [];
+      for (let i = 0; i < PAGES.length; i++) {
+        const p = PAGES[i];
+        for (let j = 0; j < p.sections.length; j++) {
+          list.push({ page: p, section: p.sections[j] });
+        }
+      }
+      return list;
+    }
+
+    function countReadInPage(page) {
+      let read = 0;
+      for (let i = 0; i < page.sections.length; i++) {
+        if (appState.readSections[page.sections[i].id]) read++;
+      }
+      return read;
+    }
+
+    function getGlobalProgress() {
+      const total = ALL_SECTIONS.length;
+      let read = 0;
+      for (let i = 0; i < total; i++) {
+        if (appState.readSections[ALL_SECTIONS[i]]) read++;
+      }
+      const pct = total > 0 ? Math.round((read / total) * 100) : 0;
+      return { read: read, total: total, pct: pct };
+    }
+
+    async function persistState() {
+      try {
+        if (window.notebookAppApi && typeof window.notebookAppApi.setAppState === 'function') {
+          await window.notebookAppApi.setAppState({
+            currentPage: appState.currentPage,
+            readSections: appState.readSections,
+            quizAnswers: appState.quizAnswers
+          });
+        }
+      } catch (e) {
+        // Non-blocking fallback inside sandbox
+      }
+    }
+
+    function updateProgressUI() {
+      const prog = getGlobalProgress();
+      const labelEl = document.getElementById('global-progress-label');
+      const pctEl = document.getElementById('global-progress-pct');
+      const fillEl = document.getElementById('global-progress-fill');
+      const barWrap = document.getElementById('global-progress-bar-wrap');
+      if (labelEl) labelEl.textContent = `${prog.read} / ${prog.total} letti`;
+      if (pctEl) pctEl.textContent = `${prog.pct}%`;
+      if (fillEl) fillEl.style.width = `${prog.pct}%`;
+      if (barWrap) barWrap.setAttribute('aria-valuenow', String(prog.pct));
+    }
+
+    function renderLeftSidebar() {
+      const navList = document.getElementById('chapter-nav-list');
+      if (!navList) return;
+      let html = '';
+      for (let i = 0; i < PAGES.length; i++) {
+        const p = PAGES[i];
+        const active = appState.currentPage === p.id;
+        const totalSec = p.sections.length;
+        const readSec = countReadInPage(p);
+        const isDone = totalSec > 0 && readSec === totalSec;
+        const pill = totalSec > 0 ? `${readSec}/${totalSec}` : 'Indice';
+        html += `
+          <li>
+            <button type="button"
+              class="chapter-nav-btn${active ? ' is-active' : ''}${isDone ? ' is-done' : ''}"
+              onclick="navigateTo('${p.id}')"
+              ${active ? 'aria-current="page"' : ''}>
+              <span class="chap-num-badge" aria-hidden="true">${p.num}</span>
+              <span>${p.shortTitle}</span>
+              <span class="chap-progress-pill">${pill}</span>
+            </button>
+          </li>
+        `;
+      }
+      navList.innerHTML = html;
+    }
+
+    function renderHomeHTML() {
+      const prog = getGlobalProgress();
+      let cardsHtml = '';
+      for (let i = 1; i < PAGES.length; i++) {
+        const p = PAGES[i];
+        const read = countReadInPage(p);
+        const tot = p.sections.length;
+        const done = tot > 0 && read === tot;
+        cardsHtml += `
+          <article class="home-chapter-card">
+            <div>
+              <div style="display:flex; justify-content:space-between; align-items:center; gap:var(--space-sm); margin-bottom:var(--space-xs);">
+                <span class="status-tag${done ? ' status-tag--positive' : ''}">${done ? 'Completato' : `Capitolo ${p.num}`}</span>
+                <span style="font-size:0.8125rem; font-weight:700; color:var(--on-surface-variant);">${read}/${tot} paragrafi</span>
+              </div>
+              <h3>${p.shortTitle}</h3>
+              <p>${p.subtitle}</p>
+            </div>
+            <div>
+              <button type="button" class="button button--secondary" onclick="navigateTo('${p.id}')">Apri capitolo →</button>
+            </div>
+          </article>
+        `;
+      }
+
+      return `
+        <div class="index-header">
+          <span>Manuale operativo interattivo — Comune di Palermo</span>
+          <span>Realizzato il 20 novembre 2026</span>
+        </div>
+        <h1 class="page-title">Dichiarazioni e Attestazioni negli Atti Contabili</h1>
+        <p class="page-lede">Guida di riferimento per dirigenti, RUP e istruttori amministrativi impegnati nella redazione conforme di proposte di deliberazione (GC e CC) e determinazioni dirigenziali (impegno e liquidazione).</p>
+
+        <div class="inset">
+          <p class="inset-title">Nota metodologica e genesi dello strumento</p>
+          <p style="margin:0;">Questo sito di documentazione interattiva è stato <strong>generato tramite Google Notebook su prompt specifico di Ciro Spataro</strong> in data <strong>20 novembre 2026</strong>, sintetizzando in modo organico il Regolamento di Contabilità (Del. C.C. n. 58/2019), il TUEL (D.Lgs. 267/2000), il D.Lgs. 118/2011, il Codice dei Contratti (D.Lgs. 36/2023) e le circolari della Ragioneria Generale e del Segretario Generale fino agli aggiornamenti 2026.</p>
+        </div>
+
+        <div class="home-meta-summary">
+          <div class="kpi-inset">
+            <div class="kpi-label">Avanzamento lettura</div>
+            <div class="kpi-value">${prog.pct}%</div>
+            <div>${prog.read} su ${prog.total} paragrafi completati</div>
+          </div>
+          <div class="kpi-inset">
+            <div class="kpi-label">Struttura guida</div>
+            <div class="kpi-value">6 Capitoli</div>
+            <div>Delibere, Impegni, Fondi UE, Liquidazioni, Quiz</div>
+          </div>
+          <div class="kpi-inset">
+            <div class="kpi-label">Copertura normativa</div>
+            <div class="kpi-value">2012 – 2026</div>
+            <div>Incluse novità 48-bis 2026 e anti-phishing IBAN</div>
+          </div>
+        </div>
+
+        <section class="doc-section" id="home-mappa" style="border-top:0; padding-top:0;">
+          <h2>Mappa concettuale del ciclo degli atti contabili</h2>
+          <p>Ogni fase della spesa pubblica nell’Ente locale richiede attestazioni specifiche a presidio della legittimità amministrativa, degli equilibri di bilancio, del Piano di Riequilibrio Finanziario Pluriennale e della tracciabilità dei flussi.</p>
+          <div class="diagram-card">
+            <svg class="diagram-svg" viewBox="0 0 820 220" role="img" aria-label="Mappa concettuale dei flussi contabili: Deliberazioni di Giunta e Consiglio, Determinazioni di Impegno, Fondi Vincolati ed Extracomunali, Determinazioni di Liquidazione e Autovalutazione">
+              <rect x="15" y="20" width="180" height="82" fill="var(--background)" stroke="var(--primary)" stroke-width="2"></rect>
+              <rect x="15" y="20" width="180" height="26" fill="var(--primary)"></rect>
+              <text x="25" y="38" fill="var(--on-primary)" font-size="12" font-weight="800">DELIBERE GC / CC (Cap. 2)</text>
+              <text x="25" y="64" fill="var(--on-surface)" font-size="11.5">• Riflessi bilancio/patrimonio</text>
+              <text x="25" y="82" fill="var(--on-surface)" font-size="11.5">• Compatibilità PRFP</text>
+              <text x="25" y="96" fill="var(--on-surface)" font-size="11.5">• Società comunali &amp; QTE Excel</text>
+
+              <line x1="200" y1="61" x2="225" y2="61" stroke="var(--tertiary)" stroke-width="2.5"></line>
+              <polygon points="225,56 235,61 225,66" fill="var(--tertiary)"></polygon>
+
+              <rect x="238" y="20" width="185" height="82" fill="var(--background)" stroke="var(--tertiary)" stroke-width="2"></rect>
+              <rect x="238" y="20" width="185" height="26" fill="var(--tertiary)"></rect>
+              <text x="248" y="38" fill="var(--on-primary)" font-size="12" font-weight="800">DD IMPEGNO (Cap. 3)</text>
+              <text x="248" y="64" fill="var(--on-surface)" font-size="11.5">• Art. 27 Reg. &amp; Cassa 183 c.8</text>
+              <text x="248" y="82" fill="var(--on-surface)" font-size="11.5">• Conflitto interessi &amp; congruità</text>
+              <text x="248" y="96" fill="var(--on-surface)" font-size="11.5">• Affidamento &amp; esigibilità 31/12</text>
+
+              <line x1="428" y1="61" x2="453" y2="61" stroke="var(--data-2)" stroke-width="2.5"></line>
+              <polygon points="453,56 463,61 453,66" fill="var(--data-2)"></polygon>
+
+              <rect x="466" y="20" width="165" height="82" fill="var(--background)" stroke="var(--data-2)" stroke-width="2"></rect>
+              <rect x="466" y="20" width="165" height="26" fill="var(--data-2)"></rect>
+              <text x="476" y="38" fill="var(--on-primary)" font-size="12" font-weight="800">VINCOLATI (Cap. 4)</text>
+              <text x="476" y="64" fill="var(--on-surface)" font-size="11.5">• Oggetto + CUP (nullità)</text>
+              <text x="476" y="82" fill="var(--on-surface)" font-size="11.5">• Ammissibilità rendiconto</text>
+              <text x="476" y="96" fill="var(--on-surface)" font-size="11.5">• Termini OGV e pagamenti</text>
+
+              <line x1="636" y1="61" x2="656" y2="61" stroke="var(--positive)" stroke-width="2.5"></line>
+              <polygon points="656,56 666,61 656,66" fill="var(--positive)"></polygon>
+
+              <rect x="668" y="20" width="142" height="82" fill="var(--background)" stroke="var(--positive)" stroke-width="2"></rect>
+              <rect x="668" y="20" width="142" height="26" fill="var(--positive)"></rect>
+              <text x="676" y="38" fill="var(--on-primary)" font-size="12" font-weight="800">LIQUIDAZ. (Cap. 5)</text>
+              <text x="676" y="64" fill="var(--on-surface)" font-size="11.5">• Art. 31 &amp; no pignoram.</text>
+              <text x="676" y="82" fill="var(--on-surface)" font-size="11.5">• Anti-phishing IBAN</text>
+              <text x="676" y="96" fill="var(--on-surface)" font-size="11.5">• GESEPA, 48-bis, bollo</text>
+
+              <rect x="15" y="132" width="795" height="68" fill="var(--surface-container-low)" stroke="var(--outline)" stroke-width="1.5"></rect>
+              <text x="30" y="158" fill="var(--primary)" font-size="13" font-weight="800">PRESIDI TRASVERSALI (Cap. 1 &amp; Cap. 6)</text>
+              <text x="30" y="180" fill="var(--on-surface)" font-size="12">Controllo ex art. 147-bis TUEL • Equilibri art. 147-quinquies • Conservazione digitale CAD • Autovalutazione finale con 12 quesiti operativi</text>
+            </svg>
+            <p class="diagram-caption">Mappa 0.1 — Architettura dei sei capitoli e sequenza dei controlli lungo il ciclo di bilancio.</p>
+          </div>
+        </section>
+
+        <section class="doc-section" id="home-capitoli">
+          <h2>Sintesi dei Capitoli</h2>
+          <div class="home-chapters-grid">${cardsHtml}</div>
+        </section>
+      `;
+    }
+
+    function renderChapterHTML(page) {
+      const read = countReadInPage(page);
+      const total = page.sections.length;
+      const allRead = total > 0 && read === total;
+
+      let sectionsHtml = '';
+      for (let i = 0; i < page.sections.length; i++) {
+        const sec = page.sections[i];
+        const isRead = Boolean(appState.readSections[sec.id]);
+        let refsHtml = '';
+        for (let r = 0; r < sec.refs.length; r++) {
+          refsHtml += `<span class="ref-chip">${sec.refs[r]}</span>`;
+        }
+        sectionsHtml += `
+          <section class="doc-section" id="${sec.id}" aria-labelledby="title-${sec.id}">
+            <div class="section-header-row">
+              <div class="section-title-group">
+                <span class="step-badge" aria-hidden="true">${sec.badge}</span>
+                <h2 id="title-${sec.id}">${sec.title}</h2>
+              </div>
+              <button type="button"
+                class="button--read-toggle"
+                aria-pressed="${isRead ? 'true' : 'false'}"
+                onclick="toggleSectionRead('${sec.id}')">
+                ${isRead ? '✓ Letto' : 'Da leggere — Segna letto'}
+              </button>
+            </div>
+            <div class="ref-strip" aria-label="Riferimenti normativi e circolari">${refsHtml}</div>
+            ${sec.html}
+          </section>
+        `;
+      }
+
+      return `
+        <div class="index-header">
+          <span>Capitolo ${page.num} di 6</span>
+          <span>${read} / ${total} paragrafi letti</span>
+        </div>
+        <h1 class="page-title">${page.title}</h1>
+        <p class="page-lede">${page.subtitle}</p>
+        <div class="chapter-toolbar">
+          <div>
+            <strong>Stato capitolo:</strong>
+            <span class="status-tag${allRead ? ' status-tag--positive' : ''}">${allRead ? 'Letto integralmente' : `${read} su ${total} paragrafi completati`}</span>
+          </div>
+          <button type="button"
+            class="button--read-toggle"
+            aria-pressed="${allRead ? 'true' : 'false'}"
+            onclick="toggleChapterRead('${page.id}')">
+            ${allRead ? '✓ Capitolo Letto (annulla)' : 'Segna intero capitolo come letto'}
+          </button>
+        </div>
+        ${sectionsHtml}
+      `;
+    }
+
+    function renderRightTOC(page) {
+      const rightList = document.getElementById('right-toc-list');
+      const mobileList = document.getElementById('mobile-toc-list');
+      let items = [];
+      if (page.id === 'home') {
+        items = [
+          { id: 'home-mappa', title: `Mappa concettuale`, read: false },
+          { id: 'home-capitoli', title: `Sintesi dei Capitoli`, read: false }
+        ];
+      } else {
+        for (let i = 0; i < page.sections.length; i++) {
+          const s = page.sections[i];
+          items.push({
+            id: s.id,
+            title: `${s.badge} ${s.title}`,
+            read: Boolean(appState.readSections[s.id])
+          });
+        }
+      }
+
+      let html = '';
+      for (let i = 0; i < items.length; i++) {
+        const it = items[i];
+        html += `
+          <li>
+            <a class="toc-link${i === 0 ? ' is-current' : ''}" href="#${it.id}" data-toc-target="${it.id}" onclick="jumpToSection(event, '${it.id}')">
+              <span>${it.title}</span>
+              ${it.read ? '<span class="toc-dot" title="Letto" aria-label="Letto">✓</span>' : ''}
+            </a>
+          </li>
+        `;
+      }
+      if (rightList) rightList.innerHTML = html;
+      if (mobileList) mobileList.innerHTML = html;
+    }
+
+    function updatePaginationButtons() {
+      const idx = PAGES.findIndex(function(p) { return p.id === appState.currentPage; });
+      const prevBtn = document.getElementById('btn-prev-page');
+      const nextBtn = document.getElementById('btn-next-page');
+      const homeBtn = document.getElementById('btn-home-page');
+
+      if (prevBtn) {
+        if (idx <= 0) {
+          prevBtn.disabled = true;
+          prevBtn.textContent = `← Inizio guida`;
+        } else {
+          prevBtn.disabled = false;
+          prevBtn.textContent = `← ${PAGES[idx - 1].shortTitle}`;
+        }
+      }
+      if (nextBtn) {
+        if (idx >= PAGES.length - 1) {
+          nextBtn.disabled = true;
+          nextBtn.textContent = `Fine guida`;
+        } else {
+          nextBtn.disabled = false;
+          nextBtn.textContent = `${PAGES[idx + 1].shortTitle} →`;
+        }
+      }
+      if (homeBtn) {
+        homeBtn.style.display = appState.currentPage === 'home' ? 'none' : 'inline-flex';
+      }
+    }
+
+    function setupTocObserver() {
+      if (tocObserver) {
+        tocObserver.disconnect();
+        tocObserver = null;
+      }
+      if (!('IntersectionObserver' in window)) return;
+      const targets = document.querySelectorAll('#page-content .doc-section[id]');
+      if (!targets.length) return;
+      tocObserver = new IntersectionObserver(function(entries) {
+        for (let i = 0; i < entries.length; i++) {
+          if (entries[i].isIntersecting) {
+            const id = entries[i].target.id;
+            const links = document.querySelectorAll('.toc-link');
+            for (let j = 0; j < links.length; j++) {
+              links[j].classList.toggle('is-current', links[j].dataset.tocTarget === id);
+            }
+            break;
+          }
+        }
+      }, { rootMargin: '-90px 0px -65% 0px', threshold: 0.05 });
+
+      for (let i = 0; i < targets.length; i++) {
+        tocObserver.observe(targets[i]);
+      }
+    }
+
+    function renderActivePage(scrollTargetId) {
+      const page = PAGES.find(function(p) { return p.id === appState.currentPage; }) || PAGES[0];
+      const mount = document.getElementById('page-content');
+      if (!mount) return;
+
+      mount.innerHTML = page.id === 'home' ? renderHomeHTML() : renderChapterHTML(page);
+      renderLeftSidebar();
+      renderRightTOC(page);
+      updateProgressUI();
+      updatePaginationButtons();
+
+      if (page.id === 'cap2') updateDelibSimulator();
+      if (page.id === 'cap5') updateLiqChecker();
+      if (page.id === 'cap6') renderQuiz();
+
+      setupTocObserver();
+
+      if (scrollTargetId) {
+        const target = document.getElementById(scrollTargetId);
+        if (target) {
+          target.scrollIntoView({ behavior: 'smooth', block: 'start' });
+        }
+      } else {
+        window.scrollTo({ top: 0, behavior: 'auto' });
+      }
+    }
+
+    function navigateTo(pageId, sectionId) {
+      const exists = PAGES.some(function(p) { return p.id === pageId; });
+      appState.currentPage = exists ? pageId : 'home';
+      closeMobileNav();
+      clearSearch();
+      renderActivePage(sectionId || null);
+      persistState();
+      const mainEl = document.getElementById('main-content');
+      if (mainEl && !sectionId) mainEl.focus({ preventScroll: true });
+    }
+
+    function goPrevPage() {
+      const idx = PAGES.findIndex(function(p) { return p.id === appState.currentPage; });
+      if (idx > 0) navigateTo(PAGES[idx - 1].id);
+    }
+
+    function goNextPage() {
+      const idx = PAGES.findIndex(function(p) { return p.id === appState.currentPage; });
+      if (idx >= 0 && idx < PAGES.length - 1) navigateTo(PAGES[idx + 1].id);
+    }
+
+    function jumpToSection(ev, sectionId) {
+      if (ev) ev.preventDefault();
+      const target = document.getElementById(sectionId);
+      const mobDetails = document.getElementById('mobile-toc-details');
+      if (mobDetails) mobDetails.open = false;
+      if (target) {
+        target.scrollIntoView({ behavior: 'smooth', block: 'start' });
+      }
+    }
+
+    function scrollToTop() {
+      window.scrollTo({ top: 0, behavior: 'smooth' });
+    }
+
+    function toggleSectionRead(sectionId) {
+      appState.readSections[sectionId] = !appState.readSections[sectionId];
+      renderActivePage(sectionId);
+      persistState();
+    }
+
+    function toggleChapterRead(pageId) {
+      const page = PAGES.find(function(p) { return p.id === pageId; });
+      if (!page) return;
+      const allRead = page.sections.length > 0 && countReadInPage(page) === page.sections.length;
+      for (let i = 0; i < page.sections.length; i++) {
+        appState.readSections[page.sections[i].id] = !allRead;
+      }
+      renderActivePage(null);
+      persistState();
+    }
+
+    /* Mobile Drawer */
+    function toggleMobileNav() {
+      const sb = document.getElementById('left-sidebar');
+      const bd = document.getElementById('sidebar-backdrop');
+      const btn = document.getElementById('mobile-menu-btn');
+      if (!sb || !bd || !btn) return;
+      const open = sb.classList.toggle('is-open');
+      bd.classList.toggle('is-open', open);
+      btn.setAttribute('aria-expanded', open ? 'true' : 'false');
+    }
+
+    function closeMobileNav() {
+      const sb = document.getElementById('left-sidebar');
+      const bd = document.getElementById('sidebar-backdrop');
+      const btn = document.getElementById('mobile-menu-btn');
+      if (sb) sb.classList.remove('is-open');
+      if (bd) bd.classList.remove('is-open');
+      if (btn) btn.setAttribute('aria-expanded', 'false');
+    }
+
+    /* Copy Formula */
+    function copyFormula(btn) {
+      if (!btn) return;
+      const box = btn.closest('.formula-box');
+      if (!box) return;
+      const textEl = box.querySelector('.formula-text');
+      const raw = textEl ? (textEl.getAttribute('data-formula') || textEl.textContent) : '';
+      if (navigator.clipboard && typeof navigator.clipboard.writeText === 'function') {
+        navigator.clipboard.writeText(raw).then(function() {
+          btn.textContent = '✓ Copiata!';
+          setTimeout(function() { btn.textContent = 'Copia formula'; }, 1800);
+        }).catch(function() {
+          btn.textContent = 'Seleziona e copia';
+        });
+      } else {
+        btn.textContent = 'Copiata negli appunti';
+        setTimeout(function() { btn.textContent = 'Copia formula'; }, 1800);
+      }
+    }
+
+    /* Interactive Cap 2 Simulator */
+    function updateDelibSimulator() {
+      const rEl = document.getElementById('delib-riflessi');
+      const pEl = document.getElementById('delib-prfp');
+      const sEl = document.getElementById('delib-partecipate');
+      const out = document.getElementById('delib-simulator-output');
+      if (!rEl || !pEl || !sEl || !out) return;
+
+      const items = [];
+      if (rEl.value === 'no') {
+        items.push(`<strong>Riflessi bilancio/patrimonio:</strong> “Il presente atto non comporta alcun riflesso sulla situazione economico-finanziaria e/o patrimoniale dell’Ente, né nell’esercizio finanziario in corso, né in quelli successivi.”`);
+      } else {
+        items.push(`<strong>Riflessi bilancio/patrimonio:</strong> Indicare le <strong>relative coperture di bilancio</strong> (esercizio corrente e successivi) e, se prevede uso di beni dell’Ente, valutare l’eventuale <strong>accantonamento per rischi e spese future</strong> (e allegare QTE in Excel se presente).`);
+      }
+
+      if (pEl.value === 'si') {
+        items.push(`<strong>PRFP (attuativo):</strong> “Si attesta che l’atto risulta attuativo del piano di riequilibrio adottato con deliberazione del Consiglio Comunale n. 6 del 31.01.2022, rimodulato con deliberazione del Consiglio Comunale n. 98 del 29.06.2023 e che non determina alcun aumento della spesa corrente sotto alcun profilo.”`);
+      } else {
+        items.push(`<strong>PRFP (non previsto):</strong> “La spesa non si pone in contrasto con il piano di riequilibrio adottato con deliberazione del Consiglio Comunale n. 6 del 31.01.2022, rimodulato con deliberazione del Consiglio Comunale n. 98 del 29.06.2023 sotto qualsiasi profilo, sia esso diretto e/o indiretto.”`);
+      }
+
+      if (sEl.value === 'si') {
+        items.push(`<strong>Società comunali:</strong> “Si attesta che l’importo della spesa non eccede il limite dei corrispettivi di cui alla deliberazione del C.C. n. 385/2020.”`);
+      }
+
+      let html = `<p class="inset-title">Attestazioni richieste nella proposta di delibera</p><ul style="margin:0;">`;
+      for (let i = 0; i < items.length; i++) html += `<li>${items[i]}</li>`;
+      html += `</ul>`;
+      out.innerHTML = html;
+    }
+
+    /* Interactive Cap 5 Checker */
+    function updateLiqChecker() {
+      const subEl = document.getElementById('liq-subject');
+      const amtEl = document.getElementById('liq-amount');
+      const funEl = document.getElementById('liq-funding');
+      const ivaEl = document.getElementById('liq-iva');
+      const out = document.getElementById('liq-checker-output');
+      if (!subEl || !amtEl || !funEl || !ivaEl || !out) return;
+
+      const sub = subEl.value;
+      const amt = parseFloat(amtEl.value) || 0;
+      const fun = funEl.value;
+      const iva = ivaEl.value;
+
+      const checks = [];
+      checks.push(`<strong>Art. 31 Reg. Cont. + 147-bis TUEL:</strong> Conformità spesa al contratto, congruità prezzi (circ. 869237/2012 e 747138/2024), assenza cause ostative/pignoramenti (circ. 539641/2019), conflitto di interessi e rispetto termini di pagamento (scadenza fattura).`);
+
+      if (sub === 'professionista') {
+        checks.push(`<strong>Regolarità contributiva Professionista:</strong> Autodichiarazione DPR 445/2000 di non avere dipendenti + attestazione regolare iscrizione e versamenti alla Cassa previdenziale (nota AREG/334077/2026).`);
+        checks.push(`<strong>Art. 48-bis DPR 602/73 (dal 15/06/2026):</strong> <span class="status-tag status-tag--positive">VERIFICA OBBLIGATORIA</span> anche per € ${amt.toFixed(2)} (soglia minima abolita per art. 54 TUIR; blocco/versamento all’Agente Riscossione se debito ≥ € 5.000).`);
+      } else {
+        checks.push(`<strong>DURC:</strong> Acquisizione DURC in corso di validità (in caso di irregolarità: intervento sostitutivo).`);
+        if (amt > 5000) {
+          checks.push(`<strong>Art. 48-bis DPR 602/73:</strong> <span class="status-tag status-tag--positive">VERIFICA OBBLIGATORIA</span> (importo &gt; € 5.000: allegare PDF esito negativo, p.iva + imponibile + n. fattura).`);
+        } else {
+          checks.push(`<strong>Art. 48-bis DPR 602/73:</strong> Non dovuta per importo ≤ € 5.000 (soggetto non art. 54 TUIR).`);
+        }
+      }
+
+      if (sub === 'partecipata') {
+        checks.push(`<strong>Tracciabilità L. 136/2010:</strong> Esclusa per liquidazioni alle società interamente partecipate dal Comune.`);
+      } else {
+        checks.push(`<strong>Tracciabilità L. 136/2010:</strong> Conto corrente dedicato e delegati (nota ANAC 338379/2025). Se variato l’IBAN negli ultimi 60 giorni: procedura rafforzata anti-phishing (circ. 802891/2026).`);
+      }
+
+      if (fun === 'ue') {
+        checks.push(`<strong>Compensazione GESEPA:</strong> <span class="status-tag status-tag--warning">ESCLUSA</span> perché trattasi di risorse comunitarie (circ. 1439542/2019); inserire in oggetto fonte, codice progetto, CUP e termini di pagamento/deroga cronologica.`);
+      } else if (amt >= 300) {
+        checks.push(`<strong>Compensazione GESEPA:</strong> <span class="status-tag status-tag--positive">VERIFICA OBBLIGATORIA</span> (importo ≥ € 300,00: allegare esito controllo art. 1243 c.c.).`);
+      } else {
+        checks.push(`<strong>Compensazione GESEPA:</strong> Non richiesta (importo inferiore a € 300,00).`);
+      }
+
+      if (iva === 'esente' && amt > 77.47) {
+        checks.push(`<strong>Imposta di bollo (Circ. 53547/2026):</strong> Verificare assolvimento marca da bollo digitale da <strong>€ 2,00</strong> (importo esente/forfettario &gt; € 77,47).`);
+      }
+
+      let html = `<p class="inset-title">Check-list generata per € ${amt.toFixed(2)}</p><ul style="margin:0;">`;
+      for (let i = 0; i < checks.length; i++) html += `<li>${checks[i]}</li>`;
+      html += `</ul>`;
+      out.innerHTML = html;
+    }
+
+    /* Interactive Cap 6 Quiz */
+    function getPreparationLevel(score, total) {
+      const pct = Math.round((score / total) * 100);
+      if (pct >= 85) return { label: `Livello Avanzato — Piena padronanza ragionieristica`, tagClass: `status-tag--positive` };
+      if (pct >= 60) return { label: `Livello Intermedio — Buona conoscenza operativa`, tagClass: `status-tag--warning` };
+      return { label: `Livello Base — Necessario ripasso dei capitoli`, tagClass: `status-tag--error` };
+    }
+
+    function renderQuiz() {
+      const mount = document.getElementById('quiz-mount');
+      if (!mount) return;
+
+      let answered = 0;
+      let score = 0;
+      for (let i = 0; i < QUIZ_QUESTIONS.length; i++) {
+        const q = QUIZ_QUESTIONS[i];
+        const ans = appState.quizAnswers[q.id];
+        if (typeof ans === 'number') {
+          answered++;
+          if (ans === q.correct) score++;
+        }
+      }
+      const total = QUIZ_QUESTIONS.length;
+      const pct = answered > 0 ? Math.round((score / total) * 100) : 0;
+      const level = getPreparationLevel(score, total);
+
+      let cardsHtml = '';
+      const letters = ['A', 'B', 'C', 'D'];
+      for (let i = 0; i < QUIZ_QUESTIONS.length; i++) {
+        const q = QUIZ_QUESTIONS[i];
+        const chosen = appState.quizAnswers[q.id];
+        const isAnswered = typeof chosen === 'number';
+        let optsHtml = '';
+        for (let j = 0; j < q.options.length; j++) {
+          let cls = 'quiz-option-btn';
+          if (isAnswered) {
+            if (j === q.correct) cls += ' is-correct';
+            else if (j === chosen && chosen !== q.correct) cls += ' is-wrong';
+          }
+          optsHtml += `
+            <button type="button"
+              class="${cls}"
+              ${isAnswered ? 'disabled' : ''}
+              onclick="answerQuiz('${q.id}', ${j})">
+              <span class="quiz-opt-letter" aria-hidden="true">${letters[j]}</span>
+              <span>${q.options[j]}</span>
+            </button>
+          `;
+        }
+        let fbHtml = '';
+        if (isAnswered) {
+          const ok = chosen === q.correct;
+          fbHtml = `
+            <div class="quiz-feedback ${ok ? 'quiz-feedback--ok' : 'quiz-feedback--ko'}" role="status">
+              <strong>${ok ? 'Risposta esatta!' : `Risposta non corretta (corretta: ${letters[q.correct]}).`}</strong>
+              ${q.explanation}
+            </div>
+          `;
+        }
+        cardsHtml += `
+          <div class="quiz-card" id="quiz-${q.id}">
+            <p class="quiz-q-title">${i + 1}. ${q.question}</p>
+            <div class="quiz-options">${optsHtml}</div>
+            ${fbHtml}
+          </div>
+        `;
+      }
+
+      mount.innerHTML = `
+        <div class="quiz-dashboard" aria-live="polite">
+          <div>
+            <div class="kpi-label">Punteggio conseguito</div>
+            <div class="kpi-value">${score} / ${total}</div>
+            <div>${answered} risposte date su ${total}</div>
+          </div>
+          <div>
+            <div class="kpi-label">Percentuale successo</div>
+            <div class="kpi-value">${pct}%</div>
+            <div>Calcolato sul totale dei quesiti</div>
+          </div>
+          <div>
+            <div class="kpi-label">Livello di preparazione</div>
+            <div style="margin-top:6px;">
+              <span class="status-tag ${answered === 0 ? '' : level.tagClass}">
+                ${answered === 0 ? 'In attesa di avvio' : level.label}
+              </span>
+            </div>
+          </div>
+        </div>
+        ${cardsHtml}
+        <div class="quiz-actions-bar">
+          <div>
+            <strong>Risultato parziale/finale:</strong> ${score} punti su ${total} (${answered}/${total} completati).
+          </div>
+          <button type="button" id="quiz-reset-btn" class="button button--secondary" onclick="resetQuiz(this)">
+            ${appState.quizResetArmed ? 'Conferma azzeramento quiz?' : 'Ricomincia quiz (Reset)'}
+          </button>
+        </div>
+      `;
+    }
+
+    function answerQuiz(qId, optIdx) {
+      appState.quizAnswers[qId] = optIdx;
+      appState.quizResetArmed = false;
+      renderQuiz();
+      persistState();
+    }
+
+    function resetQuiz(btn) {
+      if (!appState.quizResetArmed) {
+        appState.quizResetArmed = true;
+        if (btn) btn.textContent = 'Conferma azzeramento quiz?';
+        return;
+      }
+      appState.quizAnswers = {};
+      appState.quizResetArmed = false;
+      renderQuiz();
+      persistState();
+    }
+
+    /* Full-text Search */
+    function stripHtml(html) {
+      const tmp = document.createElement('div');
+      tmp.innerHTML = html;
+      return (tmp.textContent || tmp.innerText || '').replace(/\s+/g, ' ').trim();
+    }
+
+    function escapeHtml(str) {
+      return str
+        .replace(/&/g, '&amp;')
+        .replace(/</g, '&lt;')
+        .replace(/>/g, '&gt;');
+    }
+
+    function buildSnippet(text, query) {
+      const lower = text.toLowerCase();
+      const idx = lower.indexOf(query.toLowerCase());
+      if (idx < 0) return escapeHtml(text.slice(0, 130)) + '…';
+      const start = Math.max(0, idx - 45);
+      const end = Math.min(text.length, idx + query.length + 75);
+      const prefix = start > 0 ? '…' : '';
+      const suffix = end < text.length ? '…' : '';
+      const raw = text.slice(start, end);
+      const esc = escapeHtml(raw);
+      const escQ = escapeHtml(query).replace(/[.*+?^${}()|[\]\\]/g, '\\$&');
+      const hl = esc.replace(new RegExp(escQ, 'ig'), function(m) {
+        return `<mark class="search-hl">${m}</mark>`;
+      });
+      return prefix + hl + suffix;
+    }
+
+    function handleSearchInput(val) {
+      const panel = document.getElementById('search-results');
+      const clearBtn = document.getElementById('search-clear-btn');
+      if (!panel) return;
+      const q = (val || '').trim();
+      if (clearBtn) clearBtn.hidden = q.length === 0;
+      if (q.length < 2) {
+        panel.hidden = true;
+        panel.innerHTML = '';
+        return;
+      }
+
+      const qLow = q.toLowerCase();
+      const matches = [];
+      const metas = getAllSectionMeta();
+      for (let i = 0; i < metas.length; i++) {
+        const m = metas[i];
+        const plain = stripHtml(m.section.title + ' ' + m.section.refs.join(' ') + ' ' + m.section.html);
+        if (plain.toLowerCase().indexOf(qLow) !== -1) {
+          matches.push({
+            pageId: m.page.id,
+            pageTitle: m.page.shortTitle,
+            sectionId: m.section.id,
+            title: `${m.section.badge} ${m.section.title}`,
+            snippet: buildSnippet(plain, q)
+          });
+        }
+      }
+
+      if (matches.length === 0) {
+        panel.innerHTML = `<div class="search-results-header">Nessun risultato per “${escapeHtml(q)}” — prova con parole come PRFP, CUP, DURC, bollo, GESEPA.</div>`;
+        panel.hidden = false;
+        return;
+      }
+
+      let html = `<div class="search-results-header">${matches.length} ${matches.length === 1 ? 'sezione trovata' : 'sezioni trovate'}</div>`;
+      for (let i = 0; i < matches.length; i++) {
+        const res = matches[i];
+        html += `
+          <button type="button" class="search-result-item" onclick="navigateTo('${res.pageId}', '${res.sectionId}')">
+            <div class="search-result-meta">${escapeHtml(res.pageTitle)}</div>
+            <div class="search-result-title">${escapeHtml(res.title)}</div>
+            <div class="search-result-snippet">${res.snippet}</div>
+          </button>
+        `;
+      }
+      panel.innerHTML = html;
+      panel.hidden = false;
+    }
+
+    function handleSearchKeydown(ev) {
+      if (ev.key === 'Escape') {
+        clearSearch();
+      }
+    }
+
+    function clearSearch() {
+      const inp = document.getElementById('doc-search');
+      const panel = document.getElementById('search-results');
+      const clearBtn = document.getElementById('search-clear-btn');
+      if (inp) inp.value = '';
+      if (panel) {
+        panel.hidden = true;
+        panel.innerHTML = '';
+      }
+      if (clearBtn) clearBtn.hidden = true;
+    }
+
+    /* Prompt Modal */
+    function openPromptModal() {
+      const modal = document.getElementById('prompt-modal');
+      const pre = document.getElementById('prompt-full-text');
+      const closeBtn = document.getElementById('prompt-close-btn');
+      if (!modal || !pre) return;
+      lastFocusedElement = document.activeElement;
+      pre.textContent = PROMPT_USED_TEXT;
+      modal.hidden = false;
+      if (closeBtn) closeBtn.focus();
+    }
+
+    function closePromptModal() {
+      const modal = document.getElementById('prompt-modal');
+      if (!modal) return;
+      modal.hidden = true;
+      if (lastFocusedElement && typeof lastFocusedElement.focus === 'function') {
+        lastFocusedElement.focus();
+      }
+    }
+
+    function handleModalBackdropClick(ev) {
+      if (ev.target && ev.target.id === 'prompt-modal') {
+        closePromptModal();
+      }
+    }
+
+    document.addEventListener('keydown', function(ev) {
+      if (ev.key === 'Escape') {
+        const modal = document.getElementById('prompt-modal');
+        if (modal && !modal.hidden) {
+          closePromptModal();
+          return;
+        }
+        closeMobileNav();
+        const panel = document.getElementById('search-results');
+        if (panel && !panel.hidden) {
+          panel.hidden = true;
+        }
+      }
+    });
+
+    document.addEventListener('click', function(ev) {
+      const searchContainer = document.querySelector('.header-search');
+      const panel = document.getElementById('search-results');
+      if (searchContainer && panel && !panel.hidden && !searchContainer.contains(ev.target)) {
+        panel.hidden = true;
+      }
+    });
+
+    /* App Initialization */
+    async function initApp() {
+      try {
+        if (window.notebookAppApi && typeof window.notebookAppApi.getAppState === 'function') {
+          const saved = await window.notebookAppApi.getAppState();
+          if (saved && typeof saved === 'object') {
+            if (saved.currentPage) appState.currentPage = saved.currentPage;
+            if (saved.readSections && typeof saved.readSections === 'object') appState.readSections = saved.readSections;
+            if (saved.quizAnswers && typeof saved.quizAnswers === 'object') appState.quizAnswers = saved.quizAnswers;
+          }
+        }
+      } catch (e) {
+        // Proceed with clean default state
+      }
+
+      renderActivePage(null);
+
+      try {
+        if (window.notebookAppApi && typeof window.notebookAppApi.notifyAppReady === 'function') {
+          window.notebookAppApi.notifyAppReady();
+        }
+      } catch (e) {
+        // Safe fallback outside host
+      }
+    }
+
+    if (document.readyState === 'loading') {
+      document.addEventListener('DOMContentLoaded', initApp);
+    } else {
+      initApp();
+    }
+  </script>
+</body>
+</html>
